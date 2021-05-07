@@ -1,0 +1,9 @@
+# IDE files
+.idea/*
+
+# Packages
+node_modules
+
+# Compiled assets
+public/app.js
+public/app.js.map
