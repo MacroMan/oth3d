@@ -20,6 +20,8 @@ export default class Floor {
             'texture': 'lino',
             'type': 'room',
         };
+
+        this._tiles = [];
     }
 
     data() {
@@ -39,8 +41,10 @@ export default class Floor {
                     config.type = 'external';
                 }
 
-                new FloorTile(this.scene, x, z, config.texture);
+                this._tiles.push(new FloorTile(this.scene, x, z, config.texture));
             });
         });
+
+        return this._tiles;
     }
 }

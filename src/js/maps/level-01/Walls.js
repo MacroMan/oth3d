@@ -12,7 +12,7 @@ export default class extends Walls {
             data.push({
                 x: x,
                 z: 1,
-                texture: 'wall',
+                texture: 'brick-01',
             });
         }
 
@@ -21,7 +21,7 @@ export default class extends Walls {
             data.push({
                 x: 31,
                 z: z,
-                texture: 'wall',
+                texture: 'brick-01',
                 north: true,
             });
         }
@@ -31,7 +31,7 @@ export default class extends Walls {
             data.push({
                 x: x,
                 z: 13,
-                texture: 'wall',
+                texture: 'brick-01',
             });
         }
 
@@ -40,7 +40,7 @@ export default class extends Walls {
             data.push({
                 x: 1,
                 z: z,
-                texture: 'wall',
+                texture: 'brick-01',
                 north: true,
             });
         }

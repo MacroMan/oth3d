@@ -10,6 +10,8 @@ export default class Walls {
         if (new.target === Walls) throw TypeError('new of abstract class Walls');
 
         this.scene = scene;
+
+        this._tiles = [];
     }
 
     data() {
@@ -22,7 +24,9 @@ export default class Walls {
                 config.type = 'standard';
             }
 
-            new WallTile(this.scene, config.x, config.z, config.north, config.texture);
+            this._tiles.push(new WallTile(this.scene, config.x, config.z, config.north, config.texture));
         });
+
+        return this._tiles;
     }
 }

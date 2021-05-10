@@ -8,6 +8,9 @@ export default class Level {
         if (new.target === Level) throw TypeError('new of abstract class Level');
 
         this.scene = scene;
+
+        this._wallTiles = [];
+        this._floorTiles = [];
     }
 
     width() {
@@ -27,7 +30,7 @@ export default class Level {
     }
 
     draw() {
-        this.floor().draw();
-        this.walls().draw();
+        this._floorTiles = this.floor().draw();
+        this._wallTiles = this.walls().draw();
     }
 }

@@ -6,17 +6,19 @@ export default class {
         this.gui = new dat.GUI();
 
         let obj = {
-            cameraMode: () => {
-                Events.fire('controls', true);
-                Events.fire('build', false);
-            },
-            buildMode: () => {
-                Events.fire('controls', false);
-                Events.fire('build', true);
+            // cameraMode: () => {
+            //     Events.fire('controls', true);
+            //     Events.fire('build', false);
+            // },
+            'GP Office': () => {
+                Events.fire('build-gp', true);
             },
         };
 
-        this.gui.add(obj, 'cameraMode');
-        this.gui.add(obj, 'buildMode');
+        let buildFolder = this.gui.addFolder('Build rooms');
+        buildFolder.open();
+        buildFolder.add(obj, 'GP Office')
+
+        // this.gui.add(obj, 'cameraMode');
     }
 }

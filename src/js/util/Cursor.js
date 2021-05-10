@@ -1,7 +1,7 @@
 /**
  * Helpers for changing the cursor
  *
- * @todo This can probably be tidier using a getter rather than defining lots of static methods
+ * @todo This can probably be tidier using a magic method rather than defining lots of static methods
  */
 export default class Cursor {
     static set(cursor) {
