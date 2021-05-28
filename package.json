@@ -1,10 +1,9 @@
 {
-  "name": " ",
+  "name": "open-th-3d",
   "version": "0.0.1",
   "description": "",
-  "keywords": "",
   "license": "",
-  "author": "",
+  "author": "MacroMan (David Wakelin)",
   "scripts": {
     "dev": "concurrently --names \"ROLLUP,PUBLIC\" -c \"bgRed.bold,bgBlue.bold\" \"rollup -cw\" \"serve public -l 8082\"",
     "prod": "rollup -c"

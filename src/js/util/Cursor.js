@@ -35,4 +35,12 @@ export default class Cursor {
     static grabbing() {
         Cursor.set('grabbing');
     }
+
+    static ewResize() {
+        Cursor.set('ew-resize');
+    }
+
+    static nsResize() {
+        Cursor.set('ns-resize');
+    }
 }

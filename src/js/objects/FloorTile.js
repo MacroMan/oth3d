@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import Unit from '../util/Unit';
+import Storage from '../util/Storage';
 
 /**
  * Base class for all floor tiles
@@ -6,17 +8,39 @@ import * as THREE from 'three';
  * Cannot be instantiated
  */
 export default class {
-    constructor(scene, x, z, textureName) {
-        const geometry = new THREE.PlaneGeometry(100, 100);
+    constructor(x, z, config) {
+        this.x = x;
+        this.z = z;
+
+        const geometry = new THREE.PlaneGeometry(Unit.tileToPixel(config.width) || 100, Unit.tileToPixel(config.height) || 100);
         geometry.rotateX(-Math.PI / 2);
-        geometry.translate(x * 100, 0, z * 100);
+        geometry.translate(
+            Unit.tileToPixel((config.width - 1) / 2) || Unit.tileToPixel(x),
+            config.depth || 0,
+            Unit.tileToPixel((config.height - 1) / 2) || Unit.tileToPixel(z)
+        );
 
-        const texture = new THREE.TextureLoader().load('/images/' + textureName + '.png');
-        texture.magFilter = THREE.NearestFilter;
+        let material;
+        if (config.texture) {
+            const texture = new THREE.TextureLoader().load('/images/floor/' + config.texture + '.png');
+            texture.repeat.set(config.width || 1, config.height || 1);
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.FrontSide, opacity: config.opacity ?? 1, transparent: true });
+        } else {
+            material = new THREE.MeshLambertMaterial({ color: config.color, side: THREE.FrontSide, opacity: config.opacity ?? 1, transparent: true });
+        }
 
-        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, opacity: 1, transparent: true });
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.tileType = 'floor';
-        scene.add(mesh);
+        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh.mainType = 'floor';
+        this.mesh.tileType = config.type;
+        this.mesh.room = config.room;
+        this.mesh.coords = { x: x, z: z };
+
+        Storage.get('scene').add(this.mesh);
+    }
+
+    remove() {
+        Storage.get('scene').remove(this.mesh);
     }
 }

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Unit from '../util/Unit';
+import Storage from '../util/Storage';
 
 /**
  * Base class for all wall tiles
@@ -7,47 +8,43 @@ import Unit from '../util/Unit';
  * Cannot be instantiated
  */
 export default class {
-    constructor(scene, x, z, north, textureName) {
-        const textureFront = new THREE.TextureLoader().load('/images/' + textureName + '.png');
-        // textureFront.magFilter = THREE.NearestFilter;
-
-        const textureBack = new THREE.TextureLoader().load('/images/' + textureName + '-back.png');
-        // textureBack.magFilter = THREE.NearestFilter;
-
-        const materials = [
-            new THREE.MeshBasicMaterial({ map: textureFront, side: THREE.FrontSide }),
-            new THREE.MeshBasicMaterial({ map: textureBack, side: THREE.BackSide }),
-        ];
-
+    constructor(x, z, config) {
+        this.config = config;
         const geometry = new THREE.PlaneGeometry(Unit.tileToPixel(1), Unit.tileToPixel(2));
 
-        console.log(geometry);
-
-        if (north) {
+        if (config.north) {
             geometry.rotateY(-Math.PI / 2);
             geometry.translate(Unit.tileToPixel(x) - 50, Unit.tileToPixel(1), Unit.tileToPixel(z));
         } else {
             geometry.translate(Unit.tileToPixel(x), Unit.tileToPixel(1), Unit.tileToPixel(z) - 50);
         }
 
-        for (let i = 0, len = geometry.faces.length; i < len; i++) {
-            let face = geometry.faces[i].clone();
-            face.materialIndex = 1;
-            geometry.faces.push(face);
-            geometry.faceVertexUvs[0].push(geometry.faceVertexUvs[0][i].slice(0));
+        let material;
+        if (config.texture) {
+            const texture = new THREE.TextureLoader().load('/images/walls/' + config.texture + '.png');
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(4, 8);
+            material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.DoubleSide, opacity: config.opacity ?? 1, transparent: true });
+        } else {
+            material = new THREE.MeshLambertMaterial({ color: config.color, side: THREE.DoubleSide, opacity: config.opacity ?? 1, transparent: true });
         }
 
-
-        const mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-        mesh.tileType = 'wall';
-        scene.add(mesh);
+        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh.tileType = config.type;
+        this.mesh.isWallTile = true;
+        Storage.get('scene').add(this.mesh);
     }
 
     hide() {
-
+        this.mesh.visible = false;
     }
 
     show() {
+        this.mesh.visible = true;
+    }
 
+    remove() {
+        Storage.get('scene').remove(this.mesh);
     }
 }
