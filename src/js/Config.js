@@ -1,4 +1,5 @@
 export default {
+    backgroundColor: 0xbfd1e5,
     ambientLight: {
         color: 0xFFFFFF,
         intensity: 1,
@@ -19,5 +20,27 @@ export default {
     },
     camera: {
         polarAngle: 0.785398, // 45 degrees
+    },
+    textures: {
+        grass: 'grass',
+        hallway: 'hallway',
+        path: null,
+        externalWallOutside: 'brick-01',
+        externalWallInside: 'brick-01-white',
+        buildableRoomFloor: 'room-buildable',
+        unbuildableRoomFloor: 'room-unbuildable',
+        buildableRoomWall: null,
+        unbuildableRoomWall: null,
+    },
+    colors: {
+        grass: 0x00A945,
+        hallway: 0xBBBBBB,
+        path: 0xAAAAAA,
+        externalWallOutside: 0xCF552A,
+        externalWallInside: 0xC7C7C7,
+        buildableRoomFloor: 0x00A945,
+        unbuildableRoomFloor: 0xA91100,
+        buildableRoomWall: 0x00A945,
+        unbuildableRoomWall: 0xA91100,
     },
 }

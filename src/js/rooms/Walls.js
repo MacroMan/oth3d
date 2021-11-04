@@ -1,30 +1,34 @@
 import WallTile from '../objects/WallTile';
+import ArrayHelper from '../util/ArrayHelper';
+import Matrix from '../util/Matrix';
+import Config from "../Config";
 
 export default class {
-    constructor(config) {
+    constructor(room, config) {
+        this.room = room;
         this.config = config;
 
         this.tiles = [];
     }
 
-    drawRectangle(coords) {
+    drawRectangle(coords, config = {}) {
         this.removeUnusedTiles(coords);
 
         for (let x = coords.from.x; x <= coords.to.x; x++) {
             // from x to x along min z - South side
-            this.drawTile(x, coords.from.z);
+            this.drawTile(x, coords.from.z, config);
         }
         for (let x = coords.from.x; x <= coords.to.x; x++) {
             // from x to x along max z - North side
-            this.drawTile(x, coords.to.z + 1);
+            this.drawTile(x, coords.to.z, ArrayHelper.mergeObjects(config, { offset: 1 }));
         }
         for (let z = coords.from.z; z <= coords.to.z; z++) {
             // from z to z along min x - East side
-            this.drawTile(coords.from.x, z, true);
+            this.drawTile(coords.from.x, z, ArrayHelper.mergeObjects(config, { north: true }));
         }
         for (let z = coords.from.z; z <= coords.to.z; z++) {
             // from z to z along max x - West side
-            this.drawTile(coords.to.x + 1, z, true);
+            this.drawTile(coords.to.x, z, ArrayHelper.mergeObjects(config, { north: true, offset: 1 }));
         }
     }
 
@@ -59,10 +63,16 @@ export default class {
         this.tiles = [];
     }
 
-    drawTile(x, z, north) {
+    drawTile(x, z, config = {}) {
         if (!this.tileIsDrawn(x, z)) {
-            this.config.north = north;
-            this.tiles.push(new WallTile(x, z, this.config));
+            config = ArrayHelper.mergeObjects(this.config, config)
+
+            if (!this.room.isBigEnough || !Matrix.isBuildable(x, z)) {
+                config.color = Config.colors.unbuildableRoomWall;
+                config.texture = Config.textures.unbuildableRoomWall;
+            }
+
+            this.tiles.push(new WallTile(x, z, config));
         }
     }
 

@@ -1,17 +1,22 @@
-<!doctype html>
-<html>
-
+<!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-
-    <link href="css/normalize.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="app.css" rel="stylesheet">
 </head>
-
-<body>
 <div id="container"></div>
+<div id="dialogs">
+  <div id="room-build">
+    <div class="dialog-info"><span class="tac name"></span><span class="description"></span></div>
+    <div class="dialog-interactions">
+      <div class="buttons">
+        <div class="button cancel"></div>
+        <div class="button purchase-items"></div>
+        <div class="button pickup-objects"></div>
+        <div class="button confirm"></div>
+      </div>
+      <div class="object-selection"></div>
+    </div>
+  </div>
+</div>
 <script src="app.js" type="module"></script>
-</body>
-
-</html>

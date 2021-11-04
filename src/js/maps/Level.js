@@ -1,8 +1,7 @@
 import FloorTile from '../objects/FloorTile';
 import WallTile from '../objects/WallTile';
-import Floor from '../objects/Floor';
-import Unit from '../util/Unit';
-import Walls from '../objects/Walls';
+import Matrix from '../util/Matrix';
+import Config from "../Config";
 
 /**
  * Base class for all levels
@@ -15,13 +14,7 @@ export default class Level {
 
         this._wallTiles = [];
         this._floorTiles = [];
-        this.grass = new Floor({
-            type: 'grass',
-        });
-        this.floor = new Floor({
-            opacity: 0.5,
-        });
-        this.walls = new Walls();
+        Matrix.init(this.width(), this.height());
     }
 
     width() {
@@ -47,14 +40,17 @@ export default class Level {
     }
 
     drawGrass() {
-        new FloorTile(0, 0, {
-            type: 'grass',
-            // color: (x % 2) ? 0x008d28 : 0x34A842,
-            texture: 'grass2',
-            width: this.width(),
-            height: this.height(),
-            depth: -20
-        });
+        for (let z = 0; z <= this.height(); z++) {
+            for (let x = 0; x <= this.width(); x++) {
+                if (!this.hasFloorTile(x, z)) {
+                    new FloorTile(x, z, {
+                        type: 'grass',
+                        color: Config.colors.grass,
+                        texture: Config.textures.grass,
+                    });
+                }
+            }
+        }
     }
 
     drawFloor() {
@@ -62,6 +58,7 @@ export default class Level {
             for (let z = row.from.z; z <= row.to.z; z++) {
                 for (let x = row.from.x; x <= row.to.x; x++) {
                     this._floorTiles.push(new FloorTile(x, z, row));
+                    Matrix.setBuildable(x, z);
                 }
             }
         });
@@ -71,7 +68,7 @@ export default class Level {
 
     drawWalls() {
         this.wallData().forEach(row => {
-            for (let i=0; i < row.length1; i++) {
+            for (let i = 0; i < row.length1; i++) {
                 this._wallTiles.push(new WallTile(row.x, row.z, row));
 
                 row.x += (row.north) ? 0 : 1;
@@ -92,5 +89,11 @@ export default class Level {
         this._wallTiles.forEach(wall => {
             wall.show();
         });
+    }
+
+    hasFloorTile(x, z) {
+        return this.floorData().filter(row => {
+            return x >= row.from.x && x <= row.to.x && z >= row.from.z && z <= row.to.z;
+        }).length;
     }
 }

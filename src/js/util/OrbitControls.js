@@ -19,6 +19,9 @@ const _changeEvent = { type: 'change' };
 const _startEvent = { type: 'start' };
 const _endEvent = { type: 'end' };
 
+/**
+ * Custom orbit controls to allow setting the polar and azimuth angles
+ */
 class OrbitControls extends EventDispatcher {
 
     constructor(object, domElement) {

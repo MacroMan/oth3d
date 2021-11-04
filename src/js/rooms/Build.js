@@ -1,5 +1,3 @@
-import Floor from '../objects/Floor';
-import Walls from '../objects/Walls';
 import Events from '../util/Events';
 import Cursor from '../util/Cursor';
 import Storage from '../util/Storage';
@@ -16,18 +14,6 @@ export default class Build {
         this.needsDraw = false;
         this._animateListenerID = null;
 
-        this.room.floor = new Floor({
-            color: 0x00A945,
-            opacity: 0.5,
-            room: room,
-        });
-        this.room.walls = new Walls({
-            color: 0x00A945,
-            opacity: 0.5,
-            type: 'room',
-            room: room,
-        });
-
         this.build();
     }
 
@@ -43,9 +29,6 @@ export default class Build {
 
         // Change the mouse cursor
         Cursor.crosshair();
-
-        // Hide the level walls
-        Storage.get('currentLevel').hideWalls();
     }
 
     startDrag(event) {
@@ -78,12 +61,8 @@ export default class Build {
         Events.removeListenersByName('mouseup');
         Events.removeListenersByName('mousemove');
         this.room.removeAnimateListen();
-        // Events.fire('controls', true);
         Cursor.default();
-        // Storage.get('currentLevel').showWalls();
-        // this.opacity = 1;
         this.callback();
     }
-
 
 }

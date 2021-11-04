@@ -1,11 +1,23 @@
 import FloorTile from '../objects/FloorTile';
 import ArrayHelper from '../util/ArrayHelper';
+import Matrix from '../util/Matrix';
+import Config from "../Config";
 
 export default class {
-    constructor(config) {
+    constructor(room, config) {
+        this.room = room;
         this.config = config;
-
         this._tiles = [];
+    }
+
+    get isCompletable() {
+        for (let i = 0; i < this._tiles.length; i++) {
+            if (!Matrix.isBuildable(this._tiles[i].x, this._tiles[i].z)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     drawRectangle(coords, config = {}) {
@@ -21,6 +33,12 @@ export default class {
     drawTile(x, z, overwrite = false, config = {}) {
         if (!this.tileIsDrawn(x, z, overwrite)) {
             config = ArrayHelper.mergeObjects(this.config, config)
+
+            if (!this.room.isBigEnough || !Matrix.isBuildable(x, z)) {
+                config.color = Config.colors.unbuildableRoomFloor;
+                config.texture = Config.textures.unbuildableRoomFloor;
+            }
+
             this._tiles.push((new FloorTile(x, z, config)));
         }
     }

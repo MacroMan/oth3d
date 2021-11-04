@@ -11,7 +11,7 @@ export default class {
         this.camera = Storage.get('camera').camera;
         this.scene = new THREE.Scene();
         Storage.set('scene', this);
-        this.scene.background = new THREE.Color(0xbfd1e5);
+        this.scene.background = new THREE.Color(Config.backgroundColor);
 
         const ambientLight = new THREE.AmbientLight(Config.ambientLight.color, Config.ambientLight.intensity);
         this.scene.add(ambientLight);
@@ -22,7 +22,7 @@ export default class {
             Config.directionalLight.position.x,
             Config.directionalLight.position.y,
             Config.directionalLight.position.z
-        ).normalize();
+        );
 
         this.scene.add(directionalLight);
         // this.scene.add(directionalLight.target);

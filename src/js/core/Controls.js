@@ -9,8 +9,8 @@ import Config from '../Config';
 export default class Controls {
     constructor() {
         this.controls = new MapControls(Storage.get('camera').camera, Storage.get('render').renderer.domElement);
-        this._polarAngle = this.controls.minPolarAngle = this.controls.maxPolarAngle = Config.camera.polarAngle;
-        this.controls.setPolarAngle(this._polarAngle);
+        // this._polarAngle = this.controls.minPolarAngle = this.controls.maxPolarAngle = Config.camera.polarAngle;
+        // this.controls.setPolarAngle(this._polarAngle);
 
         this.controls.screenSpacePanning = false;
 

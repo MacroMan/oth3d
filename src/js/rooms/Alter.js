@@ -11,6 +11,7 @@ export default class Alter {
 
         Events.listen('mousemove', event => this.hover(event));
         Events.listen('mousedown', event => this.click(event));
+        Events.fire('controls', true);
     }
 
     hover(event) {
@@ -23,16 +24,19 @@ export default class Alter {
     }
 
     updateCursor(object) {
-        if (object.room !== this.room) {
+        if (object.room === this.room) {
             return;
         }
 
         if (object.coords.x === this.room.startTile.x || object.coords.x === this.room.endTile.x) {
             Cursor.ewResize();
+            Events.fire('controls', false);
         } else if (object.coords.z === this.room.startTile.z || object.coords.z === this.room.endTile.z) {
             Cursor.nsResize();
+            Events.fire('controls', false);
         } else {
             Cursor.default();
+            Events.fire('controls', true);
         }
     }
 
@@ -46,7 +50,7 @@ export default class Alter {
     }
 
     startDrag(object) {
-        if (this._dragging || object.room !== this.room) {
+        if (this._dragging) {
             return;
         }
 
@@ -68,6 +72,7 @@ export default class Alter {
 
         Events.removeListenersByName('mousemove');
         Events.listen('mousemove', event => this.midDrag(event));
+        Events.listen('mouseup', () => this.endDrag());
         this.room.animateListen();
     }
 
@@ -80,9 +85,18 @@ export default class Alter {
         objects.forEach(object => {
             if (this.room[this._dragging][this._checkCoord] !== object.coords[this._checkCoord]) {
                 this.room[this._dragging][this._checkCoord] = object.coords[this._checkCoord];
-                console.log(this._dragging, this._checkCoord, this.room[this._dragging][this._checkCoord], object.coords[this._checkCoord])
                 this.room.needsDraw = true;
             }
         });
+    }
+
+    endDrag() {
+        this._dragging = false;
+        Events.removeListenersByName('mousemove');
+        Events.removeListenersByName('mouseup');
+        this.room.removeAnimateListen();
+
+        Events.listen('mousemove', event => this.hover(event));
+        Events.listen('mousedown', event => this.click(event));
     }
 }
