@@ -7,6 +7,7 @@ import Walls from './Walls';
 import Cursor from '../util/Cursor';
 import RoomDialog from '../dialogs/Room';
 import Config from "../Config";
+import Door from "./Door";
 
 let rooms = [];
 
@@ -37,14 +38,13 @@ export default class Room {
         });
         this.startTile = {};
         this.endTile = {};
+        this.doorTile = {};
         this._animateListenerID = null;
         this.needsDraw = false;
 
         this.dialog = new RoomDialog({
             actions: {
-                cancel: () => {
-                    this.cancel();
-                },
+                cancel: () => this.cancel(),
             }
         });
 
@@ -59,6 +59,14 @@ export default class Room {
         this.floor.config.opacity = opacity;
         this.walls.config.opacity = opacity;
         this.redraw();
+    }
+
+    get slug() {
+        throw TypeError('missing required getter `slug` in class ' + this.constructor.name);
+    }
+
+    get name() {
+        throw TypeError('missing required getter `name` in class ' + this.constructor.name);
     }
 
     get minSize() {
@@ -121,7 +129,24 @@ export default class Room {
     }
 
     proceed() {
-        console.log('proceeding');
+        this.unlistenAll();
+
+        this.floor.config.opacity = 1;
+        // this.floor.config.color = Config.rooms[this.slug].floorColor;
+        // this.floor.config.texture = Config.rooms[this.slug].floorTexture;
+        //
+        // this.walls.config.opacity = 1;
+        // this.walls.config.opacityFront = 1;
+        // this.walls.config.opacityBack = 1;
+        // this.walls.config.color = Config.rooms[this.slug].wallColor;
+        // this.walls.config.texture = Config.rooms[this.slug].wallTexture;
+
+        this.redraw();
+
+        if (this.mode === 'alter') {
+            this.mode = 'door';
+            new Door(this);
+        }
     }
 
     cancel() {
@@ -132,20 +157,22 @@ export default class Room {
         this.floor = null;
         this.walls = null;
         this.dialog = null;
-        Events.removeListenersByName('mousedown');
-        Events.removeListenersByName('mouseup');
-        Events.removeListenersByName('mousemove');
-        Cursor.default();
-        Events.fire('controls', true);
+        this.unlistenAll();
 
         delete rooms[this.roomIndex];
     }
 
+    unlistenAll() {
+        Events.removeListenersByName('pointerdown-left');
+        Events.removeListenersByName('pointerup-left');
+        Events.removeListenersByName('pointermove');
+        Events.fire('controls-pan', true);
+        Cursor.default();
+    }
+
     alter() {
         this.mode = 'alter';
-        new Alter(this, () => {
-
-        });
+        new Alter(this);
     }
 
     animateListen() {
@@ -164,7 +191,7 @@ export default class Room {
         const coords = Unit.rectangleCoords(this.startTile.x, this.startTile.z, this.endTile.x, this.endTile.z);
 
         this.floor.drawRectangle(coords);
-        this.walls.drawRectangle(coords);
+        this.walls.drawRectangle(coords, {door: this.doorTile});
         this.needsDraw = false;
 
         if (this.isProceedable) {
@@ -176,6 +203,7 @@ export default class Room {
 
     redraw() {
         this.floor.removeAllTiles();
+        this.walls.removeAllTiles();
         this.needsDraw = true;
         this.draw();
     }

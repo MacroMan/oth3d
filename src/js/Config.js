@@ -43,4 +43,12 @@ export default {
         buildableRoomWall: 0x00A945,
         unbuildableRoomWall: 0xA91100,
     },
+    rooms: {
+        gp: {
+            floorColor: 0xE38787,
+            floorTexture: null,
+            wallColor: 0xD9D9D9,
+            wallTexture: null,
+        }
+    },
 }

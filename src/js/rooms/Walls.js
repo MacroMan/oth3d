@@ -32,6 +32,24 @@ export default class {
         }
     }
 
+    /**
+     * @todo Add door position into config
+     *
+     * @param x
+     * @param z
+     * @param config
+     * @param additionalConfig
+     *
+     * @return array The new config
+     */
+    drawRectangleConfig(x, z, config, additionalConfig = {}) {
+        if (config.door && config.door.x === x && config.door.z === z) {
+            additionalConfig.isDoor = true;
+        }
+
+        return ArrayHelper.mergeObjects(config, additionalConfig);
+    }
+
     removeUnusedTiles(coords) {
         this.tiles.slice().reverse().forEach((tile, index, object) => {
             if (this.config.north) {
@@ -66,6 +84,9 @@ export default class {
     drawTile(x, z, config = {}) {
         if (!this.tileIsDrawn(x, z)) {
             config = ArrayHelper.mergeObjects(this.config, config)
+            if (config.door && config.door.x === x && config.door.z === z) {
+                config.isDoor = true;
+            }
 
             if (!this.room.isBigEnough || !Matrix.isBuildable(x, z)) {
                 config.color = Config.colors.unbuildableRoomWall;
