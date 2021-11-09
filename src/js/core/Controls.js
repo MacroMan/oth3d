@@ -14,9 +14,11 @@ export default class Controls {
 
         this.controls.screenSpacePanning = false;
 
-        Events.listen('controls', (status) => {
-            this.controls.enabled = status;
-        });
+        Events.listen('controls', status => this.controls.enabled = status);
+        Events.listen('controls-damping', status => this.controls.enableDamping = status);
+        Events.listen('controls-zoom', status => this.controls.enableZoom = status);
+        Events.listen('controls-rotate', status => this.controls.enableRotate = status);
+        Events.listen('controls-pan', status => this.controls.enablePan = status);
 
         Storage.set('controls', this);
     }

@@ -21,18 +21,18 @@ export default class Build {
      * Start building the room
      */
     build() {
-        Events.listen('mousedown', event => this.startDrag(event));
-        Events.listen('mouseup', event => this.endDrag(event));
+        Events.listen('pointerdown-left', event => this.startDrag(event));
+        Events.listen('pointerup-left', event => this.endDrag(event));
 
-        // Turn camera control off
-        Events.fire('controls', false);
+        // Turn camera panning off
+        Events.fire('controls-pan', false);
 
         // Change the mouse cursor
         Cursor.crosshair();
     }
 
     startDrag(event) {
-        Events.listen('mousemove', event => this.midDrag(event));
+        Events.listen('pointermove', event => this.midDrag(event));
         this.room.animateListen();
 
         let object = ThreeHelper.getIntersectedFloors(event, 'floor')[0];
@@ -57,9 +57,9 @@ export default class Build {
     }
 
     endDrag() {
-        Events.removeListenersByName('mousedown');
-        Events.removeListenersByName('mouseup');
-        Events.removeListenersByName('mousemove');
+        Events.removeListenersByName('pointerdown-left');
+        Events.removeListenersByName('pointerup-left');
+        Events.removeListenersByName('pointermove');
         this.room.removeAnimateListen();
         Cursor.default();
         this.callback();

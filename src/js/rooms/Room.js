@@ -51,6 +51,10 @@ export default class Room {
         new Build(this, () => this.alter());
     }
 
+    // ####################
+    // Accessors / Mutators
+    // ####################
+
     set opacity(opacity) {
         this.floor.config.opacity = opacity;
         this.walls.config.opacity = opacity;
@@ -72,6 +76,33 @@ export default class Room {
 
     get isProceedable() {
         return (this.isBigEnough && this.floor.isCompletable);
+    }
+
+    // #######
+    // Helpers
+    // #######
+
+    isCoordsOverStartX(coords) {
+        return coords.x === this.startTile.x && this.isCoordsOverRoom(coords);
+    }
+
+    isCoordsOverStartZ(coords) {
+        return coords.z === this.startTile.z && this.isCoordsOverRoom(coords);
+    }
+
+    isCoordsOverEndX(coords) {
+        return coords.x === this.endTile.x && this.isCoordsOverRoom(coords);
+    }
+
+    isCoordsOverEndZ(coords) {
+        return coords.z === this.endTile.z && this.isCoordsOverRoom(coords);
+    }
+
+    isCoordsOverRoom(coords) {
+        return coords.x >= this.startTile.x &&
+            coords.x <= this.endTile.x &&
+            coords.z >= this.startTile.z &&
+            coords.z <= this.endTile.z;
     }
 
     addProceed() {
@@ -147,6 +178,19 @@ export default class Room {
         this.floor.removeAllTiles();
         this.needsDraw = true;
         this.draw();
+    }
+
+    /**
+     * Move the room on the map by x and z units
+     *
+     * @param x
+     * @param z
+     */
+    move(x, z) {
+        this.startTile.x += x;
+        this.startTile.z += z;
+        this.endTile.x += x;
+        this.endTile.z += z;
     }
 
 }

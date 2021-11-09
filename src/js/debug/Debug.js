@@ -4,6 +4,7 @@ import Events from '../util/Events';
 import Gp from '../rooms/Gp';
 import Storage from '../util/Storage';
 import ColorGUIHelper from './ColorGUIHelper';
+import Logging from './Logging';
 
 let debug;
 
@@ -52,6 +53,9 @@ export default class {
         directionalLight.add(this.directionalLight.position, 'y', -1000, 10000, 100);
         directionalLight.add(this.directionalLight.position, 'z', -5000, 5000, 100);
         // directionalLight.open();
+
+        const logging = this.gui.addFolder('Logging');
+        logging.add(Logging, 'events');
 
         this.dialog = this.gui.addFolder('Dialog');
         this.dialog.hide();

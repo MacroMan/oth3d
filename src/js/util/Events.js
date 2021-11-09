@@ -1,3 +1,5 @@
+import Logging from '../debug/Logging';
+
 let listeners = [];
 
 /**
@@ -17,11 +19,15 @@ export default class Events {
             throw TypeError("callback is not a function");
         }
 
-        return listeners.push({
+        const listener = listeners.push({
             id: listeners.length,
             name: name,
             callback: callback,
         }) - 1;
+
+        Logging.log('events', 'New event listener registered', listener)
+
+        return listener;
     }
 
     /**
@@ -30,6 +36,8 @@ export default class Events {
      * @param id
      */
     static removeListenersByID(id) {
+        Logging.log('events', 'Removing listener(s) by id', id);
+
         listeners.slice().reverse().forEach((listener, index, object) => {
             if (listener.id === id) {
                 listeners.splice(object.length - 1 - index, 1);
@@ -43,6 +51,8 @@ export default class Events {
      * @param name
      */
     static removeListenersByName(name) {
+        Logging.log('events', 'Removing listener(s) by name', name);
+
         listeners.slice().reverse().forEach((listener, index, object) => {
             if (listener.name === name) {
                 listeners.splice(object.length - 1 - index, 1);
@@ -57,17 +67,34 @@ export default class Events {
      * @param args
      */
     static fire(name, ...args) {
+        let fired = 0;
+
         listeners.forEach(listener => {
             if (listener.name === name) {
                 listener.callback(...args);
+                fired++;
             }
         });
+
+        if (name !== 'animate') {
+            Logging.log('events', 'Fired event', name, 'with', fired, 'callbacks executed');
+        }
     }
 }
 
 /**
  * Register document events
  */
-['mousedown', 'mouseup', 'mousemove'].forEach(type => {
-    document.addEventListener(type, event => Events.fire(type, event));
+['pointerdown', 'pointerup'].forEach(type => {
+    document.addEventListener(type, event => {
+        if (event.button === 0) {
+            Events.fire(type + '-left', event);
+        } else if (event.button === 1) {
+            Events.fire(type + '-middle', event);
+        } else if (event.button === 3) {
+            Events.fire(type + '-right', event);
+        }
+    });
 });
+
+document.addEventListener('pointermove', event => Events.fire('pointermove', event));

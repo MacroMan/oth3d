@@ -67,8 +67,6 @@ export default class {
             const colorTop = config.colorTop ?? config.color;
             const colorSide = config.colorSide ?? config.color;
 
-            console.log(config.colorFront, config.color, (config.colorFront !== 'undefined'));
-
             material = [
                 (colorSide) ? new THREE.MeshPhongMaterial({ color: colorSide, side: THREE.DoubleSide, opacity: config.opacitySide ?? config.opacity, transparent: true }) : blankColor, // left
                 (colorSide) ? new THREE.MeshPhongMaterial({ color: colorSide, side: THREE.DoubleSide, opacity: config.opacitySide ?? config.opacity, transparent: true }) : blankColor, // right

@@ -8,10 +8,12 @@ export default class Alter {
 
         this._dragging = false;
         this._checkCoord = 'x';
+        this._currentX = null;
+        this._currentZ = null;
 
-        Events.listen('mousemove', event => this.hover(event));
-        Events.listen('mousedown', event => this.click(event));
-        Events.fire('controls', true);
+        Events.listen('pointermove', event => this.hover(event));
+        Events.listen('pointerdown-left', event => this.click(event));
+        Events.fire('controls-pan', true);
     }
 
     hover(event) {
@@ -28,15 +30,20 @@ export default class Alter {
             return;
         }
 
-        if (object.coords.x === this.room.startTile.x || object.coords.x === this.room.endTile.x) {
+        let coords = object.coords;
+
+        if (this.room.isCoordsOverStartX(coords) || this.room.isCoordsOverEndX(coords)) {
             Cursor.ewResize();
-            Events.fire('controls', false);
-        } else if (object.coords.z === this.room.startTile.z || object.coords.z === this.room.endTile.z) {
+            Events.fire('controls-pan', false);
+        } else if (this.room.isCoordsOverStartZ(coords) || this.room.isCoordsOverEndZ(coords)) {
             Cursor.nsResize();
-            Events.fire('controls', false);
+            Events.fire('controls-pan', false);
+        } else if (this.room.isCoordsOverRoom(coords)) {
+            Cursor.grab();
+            Events.fire('controls-pan', false);
         } else {
             Cursor.default();
-            Events.fire('controls', true);
+            Events.fire('controls-pan', true);
         }
     }
 
@@ -54,29 +61,38 @@ export default class Alter {
             return;
         }
 
-        if (object.coords.x === this.room.startTile.x) {
+        let coords = object.coords;
+        let draggingFunction = 'midDragResize';
+
+        this.room.isCoordsOverStartX(coords)
+        if (this.room.isCoordsOverStartX(coords)) {
             this._dragging = 'startTile';
             this._checkCoord = 'x';
-        } else if (object.coords.x === this.room.endTile.x) {
+        } else if (this.room.isCoordsOverEndX(coords)) {
             this._dragging = 'endTile';
             this._checkCoord = 'x';
-        } else if (object.coords.z === this.room.startTile.z) {
+        } else if (this.room.isCoordsOverStartZ(coords)) {
             this._dragging = 'startTile';
             this._checkCoord = 'z';
-        } else if (object.coords.z === this.room.endTile.z) {
+        } else if (this.room.isCoordsOverEndZ(coords)) {
             this._dragging = 'endTile';
             this._checkCoord = 'z';
+        } else if (this.room.isCoordsOverRoom(coords)) {
+            this._dragging = 'centerTile';
+            this._currentX = coords.x;
+            this._currentZ = coords.z;
+            draggingFunction = 'midDragMove';
         } else {
             return;
         }
 
-        Events.removeListenersByName('mousemove');
-        Events.listen('mousemove', event => this.midDrag(event));
-        Events.listen('mouseup', () => this.endDrag());
+        Events.removeListenersByName('pointermove');
+        Events.listen('pointermove', event => this[draggingFunction](event));
+        Events.listen('pointerup-left', event => this.endDrag(event));
         this.room.animateListen();
     }
 
-    midDrag(event) {
+    midDragResize(event) {
         let objects = ThreeHelper.getIntersectedFloors(event, 'floor');
         if (!objects.length) {
             return;
@@ -90,13 +106,32 @@ export default class Alter {
         });
     }
 
+    midDragMove(event) {
+        let objects = ThreeHelper.getIntersectedFloors(event, 'floor');
+        if (!objects.length) {
+            return;
+        }
+
+        objects.forEach(object => {
+            let coords = object.coords;
+            if (coords.x !== this._currentX || coords.z !== this._currentZ) {
+                let diffX = coords.x - this._currentX;
+                let diffZ = coords.z - this._currentZ;
+                this._currentX = coords.x;
+                this._currentZ = coords.z;
+                this.room.move(diffX, diffZ);
+                this.room.needsDraw = true;
+            }
+        });
+    }
+
     endDrag() {
         this._dragging = false;
-        Events.removeListenersByName('mousemove');
-        Events.removeListenersByName('mouseup');
+        Events.removeListenersByName('pointermove');
+        Events.removeListenersByName('pointerup-left');
         this.room.removeAnimateListen();
 
-        Events.listen('mousemove', event => this.hover(event));
-        Events.listen('mousedown', event => this.click(event));
+        Events.listen('pointermove', event => this.hover(event));
+        Events.listen('pointerdown-left', event => this.click(event));
     }
 }
