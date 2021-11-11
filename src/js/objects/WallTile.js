@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import Unit from '../util/Unit';
 import Storage from '../util/Storage';
+import Logging from "../debug/Logging";
 
 /**
  * Base class for all wall tiles
@@ -78,6 +79,8 @@ export default class {
 
             // material = new THREE.MeshLambertMaterial({ color: config.color, side: THREE.DoubleSide, opacity: config.opacity ?? 1, transparent: true });
         }
+
+        Logging.log('roomConstruction', "Placing wall", geometry, material);
 
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.tileType = config.type;

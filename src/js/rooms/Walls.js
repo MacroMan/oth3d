@@ -86,6 +86,8 @@ export default class {
             config = ArrayHelper.mergeObjects(this.config, config)
             if (config.door && config.door.x === x && config.door.z === z) {
                 config.isDoor = true;
+                config.colorFront = config.colorBack = Config.colors.buildableRoomDoor;
+                config.opacityFront = config.opacityBack = 0.5;
             }
 
             if (!this.room.isBigEnough || !Matrix.isBuildable(x, z)) {

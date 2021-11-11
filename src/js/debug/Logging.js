@@ -1,6 +1,7 @@
 class Logging {
     constructor() {
         this.events = false;
+        this.roomConstruction = false;
     }
 
     log(type, ...data) {

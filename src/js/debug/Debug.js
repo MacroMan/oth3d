@@ -56,6 +56,7 @@ export default class {
 
         const logging = this.gui.addFolder('Logging');
         logging.add(Logging, 'events');
+        logging.add(Logging, 'roomConstruction');
 
         this.dialog = this.gui.addFolder('Dialog');
         this.dialog.hide();

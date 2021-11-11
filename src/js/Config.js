@@ -31,6 +31,8 @@ export default {
         unbuildableRoomFloor: 'room-unbuildable',
         buildableRoomWall: null,
         unbuildableRoomWall: null,
+        buildableRoomDoor: null,
+        unbuildableRoomDoor: null,
     },
     colors: {
         grass: 0x00A945,
@@ -42,6 +44,8 @@ export default {
         unbuildableRoomFloor: 0xA91100,
         buildableRoomWall: 0x00A945,
         unbuildableRoomWall: 0xA91100,
+        buildableRoomDoor: 0x00A945,
+        unbuildableRoomDoor: 0xA91100,
     },
     rooms: {
         gp: {

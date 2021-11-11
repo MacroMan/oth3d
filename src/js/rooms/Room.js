@@ -38,7 +38,7 @@ export default class Room {
         });
         this.startTile = {};
         this.endTile = {};
-        this.doorTile = {};
+        this.doorTile = null;
         this._animateListenerID = null;
         this.needsDraw = false;
 

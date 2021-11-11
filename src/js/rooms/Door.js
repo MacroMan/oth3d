@@ -8,7 +8,6 @@ export default class Door {
 
         Events.listen('pointermove', event => this.hover(event));
         Events.listen('pointerdown-left', event => this.click(event));
-        Events.fire('controls-pan', true);
         this.room.animateListen();
     }
 
@@ -37,9 +36,19 @@ export default class Door {
         ) {
             this.room.doorTile = coords;
         } else {
-            this.room.doorTile = {};
+            this.room.doorTile = null;
         }
 
         this.room.needsDraw = (this.room.doorTile !== previousCoords);
+    }
+
+    placeDoor(event) {
+        if (!this.room.doorTile) {
+            return;
+        }
+
+        Events.removeListenersByName('pointermove');
+        Events.removeListenersByName('pointerdown-left');
+        this.room.removeAnimateListen();
     }
 }
