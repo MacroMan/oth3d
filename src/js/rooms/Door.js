@@ -1,13 +1,12 @@
 import Events from "../util/Events";
 import ThreeHelper from "../util/ThreeHelper";
-import Cursor from "../util/Cursor";
 
 export default class Door {
     constructor(room) {
         this.room = room;
 
         Events.listen('pointermove', event => this.hover(event));
-        Events.listen('pointerdown-left', event => this.click(event));
+        Events.listen('pointerdown-left', event => this.placeDoor(event));
         this.room.animateListen();
     }
 

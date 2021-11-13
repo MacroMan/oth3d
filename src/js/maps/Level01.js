@@ -16,6 +16,8 @@ export default class extends Level {
     /**
      * Get the floor data
      *
+     * "doorable": false
+     *
      * @returns []
      */
     floorData() {
@@ -25,6 +27,8 @@ export default class extends Level {
                 type: 'corridor',
                 color: Config.colors.hallway,
                 texture: Config.textures.hallway,
+                buildable: true,
+                doorable: true,
                 from: { x: 3, z: 12 },
                 to: { x: 13, z: 24 },
             }, {
@@ -32,6 +36,8 @@ export default class extends Level {
                 type: 'corridor',
                 color: Config.colors.hallway,
                 texture: Config.textures.hallway,
+                buildable: true,
+                doorable: true,
                 from: { x: 14, z: 12 },
                 to: { x: 17, z: 14 },
             }, {
@@ -39,6 +45,8 @@ export default class extends Level {
                 type: 'corridor',
                 color: Config.colors.hallway,
                 texture: Config.textures.hallway,
+                buildable: true,
+                doorable: true,
                 from: { x: 18, z: 12 },
                 to: { x: 25, z: 24 },
             },{
@@ -46,6 +54,8 @@ export default class extends Level {
                 type: 'corridor',
                 color: Config.colors.hallway,
                 texture: Config.textures.hallway,
+                buildable: true,
+                doorable: true,
                 from: { x: 26, z: 4 },
                 to: { x: 39, z: 32 },
             }, {
@@ -53,16 +63,21 @@ export default class extends Level {
                 type: 'corridor',
                 color: Config.colors.hallway,
                 texture: Config.textures.hallway,
+                buildable: true,
+                doorable: true,
                 from: { x: 40, z: 12 },
                 to: { x: 47, z: 24 },
-            }, {
-                // Path
-                type: 'path',
-                color: Config.colors.path,
-                texture: Config.textures.path,
-                from: { x: 31, z: 0 },
-                to: { x: 33, z: 3 },
             },
+            // {
+            //     // Path
+            //     type: 'path',
+            //     color: Config.colors.path,
+            //     texture: Config.textures.path,
+            //     buildable: false,
+            //     doorable: false,
+            //     from: { x: 31, z: 0 },
+            //     to: { x: 33, z: 3 },
+            // },
         ];
     }
 

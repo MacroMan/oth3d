@@ -58,7 +58,9 @@ export default class Level {
             for (let z = row.from.z; z <= row.to.z; z++) {
                 for (let x = row.from.x; x <= row.to.x; x++) {
                     this._floorTiles.push(new FloorTile(x, z, row));
-                    Matrix.setBuildable(x, z);
+                    if (row.buildable) {
+                        Matrix.setBuildable(x, z);
+                    }
                 }
             }
         });

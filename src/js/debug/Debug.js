@@ -5,6 +5,7 @@ import Gp from '../rooms/Gp';
 import Storage from '../util/Storage';
 import ColorGUIHelper from './ColorGUIHelper';
 import Logging from './Logging';
+import Floor from './Floor';
 
 let debug;
 
@@ -15,6 +16,7 @@ export default class {
         this.scene = Storage.get('scene').scene;
         this.ambientLight = Storage.get('ambientLight');
         this.directionalLight = Storage.get('directionalLight');
+        this.floor = new Floor;
 
         this.stats();
         this.gui();
@@ -55,6 +57,7 @@ export default class {
         // directionalLight.open();
 
         const logging = this.gui.addFolder('Logging');
+        logging.add(this.floor, 'enabled').name('Floor data');
         logging.add(Logging, 'events');
         logging.add(Logging, 'roomConstruction');
 

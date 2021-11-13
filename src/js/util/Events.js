@@ -98,3 +98,4 @@ export default class Events {
 });
 
 document.addEventListener('pointermove', event => Events.fire('pointermove', event));
+document.addEventListener('mousemove', event => Events.fire('mousemove', event));

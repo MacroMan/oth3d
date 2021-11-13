@@ -2,3 +2,11 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+.debug-hover-info {
+    position: absolute;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
