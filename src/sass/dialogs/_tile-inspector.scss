@@ -1,0 +1,20 @@
+#tile-inspector {
+    input.coord {
+        height: calc(100% - 6px);
+    }
+
+    .floors {
+        background-color: #fff;
+        margin: 0 0.2rem;
+        padding: 0;
+
+        > div {
+            cursor: pointer;
+            padding: 0.2rem;
+
+            &.active {
+                background-color: aqua;
+            }
+        }
+    }
+}

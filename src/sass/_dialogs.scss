@@ -1,0 +1,38 @@
+@import "svg";
+
+#dialogs {
+    user-select: none;
+
+    > div {
+        position: fixed;
+        display: none;
+        top: 0;
+        left: 0;
+
+        border: 1px solid;
+        background-color: skyblue;
+
+        > div {
+            padding: 0.4rem;
+        }
+
+
+        &.modal {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &.show {
+            display: block;
+        }
+    }
+
+    input {
+        &.coord {
+            max-width: 1.5rem;
+        }
+    }
+}
+
+@import "dialogs/tile-inspector";

@@ -5,26 +5,35 @@
   "license": "",
   "author": "MacroMan (David Wakelin)",
   "scripts": {
-    "dev": "concurrently --names \"ROLLUP,GULP,PUBLIC\" -c \"bgRed.bold,bgGreen.bold,bgBlue.bold\" \"rollup -cw\" \"gulp watch\" \"serve public -l 8082\"",
-    "prod": "concurrently \"rollup -c\" \"gulp\""
+    "dev": "rimraf public/app.js && tsc && concurrently --names \"TSC,ROLLUP,GULP,SERVE\" -c \"bgPink.bold,bgRed.bold,bgGreen.bold,bgBlue.bold\" \"tsc --watch\" \"rollup -cw\" \"gulp watch\" \"serve public -l 8082\"",
+    "prod": "concurrently \"tsc && rollup -c rollup.config.prod.js\" \"gulp\""
   },
   "devDependencies": {
-    "@macroman/dat.gui": "^1.2.1",
-    "@rollup/plugin-commonjs": "^21.0.1",
+    "@open-wc/building-rollup": "^2.0.1",
+    "@rollup/plugin-commonjs": "^21.0.2",
     "@rollup/plugin-node-resolve": "^13.0.6",
-    "concurrently": "^6.0.2",
+    "@types/dat.gui": "^0.7.7",
+    "@types/three": "^0.138.0",
+    "@types/web": "0.0.59",
+    "concurrently": "^7.0.0",
+    "dat.gui": "^0.7.9",
+    "deepmerge": "^4.2.2",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
-    "parcel-bundler": "^1.9.4",
-    "rollup": "^2.46.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.70.1",
     "rollup-plugin-scss": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
-    "sass": "^1.35.2",
+    "sass": "^1.49.9",
     "serve": "^13.0.2",
-    "three": "^0.134.0"
+    "three": "^0.138.3",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "@rollup/plugin-json": "^4.1.0"
   }
 }

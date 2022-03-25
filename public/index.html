@@ -6,6 +6,52 @@
 </head>
 <div id="container"></div>
 <div id="dialogs">
+  <div class="modal" id="info">
+    <div class="flex">
+      <div class="button close float-right"></div>
+    </div>
+    <div class="message"></div>
+  </div>
+  <div class="modal" id="yes-no">
+    <div class="message"></div>
+    <div class="flex">
+      <button class="no"></button>
+      <button class="yes"></button>
+    </div>
+  </div>
+  <div class="modal" id="input">
+    <div class="message"></div>
+    <input class="input" type="text">
+    <button class="cancel">Cancel</button>
+    <button class="ok">OK</button>
+  </div>
+  <div class="modal" id="select">
+    <div class="message"></div>
+    <div>
+      <select class="input"></select>
+    </div>
+    <div class="flex">
+      <button class="cancel">Cancel</button>
+      <button class="ok">OK</button>
+    </div>
+  </div>
+  <div id="tile-inspector">
+    <div class="flex padding"><span class="title">Tile inspector</span>
+      <div class="button close float-right"></div>
+    </div>
+    <div class="line"></div>
+    <div class="flex"><span>X:
+        <input class="coord x-coord" type="text" value="14" disabled></span><span>Z:
+        <input class="coord z-coord" type="text" value="12" disabled></span>
+      <div class="spinner">
+        <button class="up" disabled></button>
+        <button class="down" disabled></button>
+      </div>
+      <button class="add addFloor" disabled></button>
+    </div>
+    <div class="floors"></div>
+    <div class="walls"></div>
+  </div>
   <div id="room-build">
     <div class="dialog-info"><span class="tac name"></span><span class="description"></span></div>
     <div class="dialog-interactions">

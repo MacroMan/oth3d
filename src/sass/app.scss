@@ -3,10 +3,8 @@ html, body {
     padding: 0;
 }
 
-.debug-hover-info {
-    position: absolute;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-}
+@import "dialogs";
+@import "flex";
+@import "buttons";
+@import "line";
+@import "spinner";

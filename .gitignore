@@ -5,5 +5,6 @@
 node_modules
 
 # Compiled assets
+tsc-out
 public/app.js
 public/app.js.map

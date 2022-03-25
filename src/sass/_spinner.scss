@@ -1,0 +1,17 @@
+.spinner {
+    .up, .down {
+        display: block;
+        width: 26px;
+        height: 14px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .up {
+        background-image: up-icon(#000);
+    }
+
+    .down {
+        background-image: down-icon(#000);
+    }
+}

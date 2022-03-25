@@ -1,0 +1,37 @@
+@import "svg";
+
+button, .button {
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+
+    &.close {
+        background-image: cross-icon(#000);
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.spinner {
+    .up, .down {
+        display: block;
+        width: 26px;
+        height: 14px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .up {
+        background-image: up-icon(#000);
+    }
+
+    .down {
+        background-image: down-icon(#000);
+    }
+}
+
+button.add {
+    height: 28px;
+    width: 28px;
+    background-image: add-icon(#000);
+}

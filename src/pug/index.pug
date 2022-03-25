@@ -5,6 +5,43 @@ head
     link(href='app.css' rel='stylesheet')
 #container
 #dialogs
+    #info.modal
+        .flex
+            .button.close.float-right
+        .message
+    #yes-no.modal
+        .message
+        .flex
+            button.no
+            button.yes
+    #input.modal
+        .message
+        input.input(type="text")
+        button.cancel Cancel
+        button.ok OK
+    #select.modal
+        .message
+        div
+            select.input
+        .flex
+            button.cancel Cancel
+            button.ok OK
+    #tile-inspector
+        .flex.padding
+            span.title Tile inspector
+            .button.close.float-right
+        .line
+        .flex
+            span X:
+                input.coord.x-coord(type="text" value="14" disabled)
+            span Z:
+                input.coord.z-coord(type="text" value="12" disabled)
+            .spinner
+                button.up(disabled)
+                button.down(disabled)
+            button.add.addFloor(disabled)
+        .floors
+        .walls
     #room-build
         .dialog-info
             span.tac.name

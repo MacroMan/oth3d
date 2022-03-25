@@ -1,11 +1,16 @@
 import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import {nodeResolve} from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import json from "@rollup/plugin-json";
 
-export default {
+import merge from 'deepmerge';
+import { createBasicConfig } from '@open-wc/building-rollup';
+
+const baseConfig = createBasicConfig();
+
+export default merge(baseConfig, {
     input: './tsc-out/src/js/app.js',
     output: {
+        dir: null,
         file: 'public/app.js',
         format: 'iife',
         sourcemap: true,
@@ -13,7 +18,6 @@ export default {
     plugins: [
         nodeResolve(),
         commonjs(),
-        sourcemaps(),
-        json()
+        sourcemaps()
     ]
-};
+});

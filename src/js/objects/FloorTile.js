@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import Unit from '../util/Unit';
-import Storage from '../util/Storage';
 
 /**
  * Base class for all floor tiles
@@ -8,7 +7,8 @@ import Storage from '../util/Storage';
  * Cannot be instantiated
  */
 export default class {
-    constructor(x, z, config) {
+    constructor(scene, x, z, config) {
+        this.scene = scene;
         this.x = x;
         this.z = z;
 
@@ -37,10 +37,10 @@ export default class {
         this.mesh.room = config.room;
         this.mesh.coords = { x: x, z: z };
 
-        Storage.get('scene').add(this.mesh);
+        this.scene.add(this.mesh);
     }
 
     remove() {
-        Storage.get('scene').remove(this.mesh);
+        this.scene.remove(this.mesh);
     }
 }
