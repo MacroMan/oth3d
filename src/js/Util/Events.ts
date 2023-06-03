@@ -11,7 +11,6 @@ export enum EventName {
     PointerUpLeft = "pointer-up-left",
     PointerUpMiddle = "pointer-up-middle",
     PointerUpRight = "pointer-up-right",
-    MouseMove = "mousemove",
     PointerMove = "pointermove",
     Animate = "animate",
     Controls = "controls",
@@ -19,6 +18,8 @@ export enum EventName {
     ControlsZoom = "controls-zoom",
     ControlsRotate = "controls-rotate",
     ControlsPan = "controls-pan",
+    TileChange = "tile-change",
+    TileSelect = "tile-select",
 }
 
 const listeners: Event[] = [];
@@ -86,7 +87,7 @@ export default class Events {
 /**
  * Register document events
  */
-document.addEventListener('pointerdown', (event: any) => {
+document.addEventListener('pointerdown', (event: PointerEvent) => {
     if (event.button === 0) {
         Events.fire(EventName.PointerDownLeft, event);
     } else if (event.button === 1) {
@@ -96,7 +97,7 @@ document.addEventListener('pointerdown', (event: any) => {
     }
 });
 
-document.addEventListener('pointerup', (event: any) => {
+document.addEventListener('pointerup', (event: PointerEvent) => {
     if (event.button === 0) {
         Events.fire(EventName.PointerUpLeft, event);
     } else if (event.button === 1) {
@@ -107,4 +108,4 @@ document.addEventListener('pointerup', (event: any) => {
 });
 
 document.addEventListener('pointermove', event => Events.fire(EventName.PointerMove, event));
-document.addEventListener('mousemove', event => Events.fire(EventName.MouseMove, event));
+document.addEventListener('mousemove', event => Events.fire(EventName.PointerMove, event));

@@ -1,4 +1,4 @@
-import Events, {EventName} from "../Util/Events";
+import Events, { EventName } from "../Util/Events";
 import FloorTile from "../core/Matrix/FloorTile";
 import Dialog from "./Dialog";
 import MatrixObject from "../core/Matrix/MatrixObject";
@@ -6,7 +6,7 @@ import ArrayHelper from "../Util/ArrayHelper";
 import Scene from "../core/Scene";
 import Matrix from "../core/Matrix";
 import Select from "./Select";
-import {getTextures, Texture} from "../core/Matrix/FloorTypes";
+import { getTextures, Texture } from "../core/Matrix/FloorTypes";
 
 /**
  * Allows clicking on any tile to get and change floor and wall information
@@ -16,9 +16,7 @@ import {getTextures, Texture} from "../core/Matrix/FloorTypes";
 export default class TileInspector extends Dialog {
     private object: MatrixObject | undefined;
     private currentFloorTile: number | undefined;
-    private pointerDownListener: number | undefined;
-    private x: number | undefined;
-    private z: number | undefined;
+    private tileSelectListener: number | undefined;
 
     constructor(scene: Scene, matrix: Matrix) {
         super(scene, matrix);
@@ -33,11 +31,11 @@ export default class TileInspector extends Dialog {
     }
 
     override onOpen() {
-        this.pointerDownListener = Events.listen(EventName.PointerDownLeft, (event: PointerEvent) => this.onMatrixClick(event));
+        this.tileSelectListener = Events.listen(EventName.TileSelect, (object: MatrixObject) => this.onTileChange(object));
     }
 
     override onClose() {
-        Events.removeListenersByID(this.pointerDownListener as number);
+        Events.removeListenersByID(this.tileSelectListener as number);
         this.disableAddButton();
         this.disableMoveButtons();
         delete this.object;
@@ -136,26 +134,10 @@ export default class TileInspector extends Dialog {
         this.addButton.setAttribute('disabled', 'disabled');
     }
 
-    /**
-     * Update the dialog with the data from the clicked tile
-     *
-     * @param event
-     */
-    onMatrixClick(event: PointerEvent): void {
-        let object = this.scene.getIntersectedFloors(event, 'floor')[0];
-        if (!object) {
-            return;
-        }
-
-        delete this.currentFloorTile;
-
-        this.object = this.matrix
-            .getObjectAt(object.userData["config"].x, object.userData["config"].z);
-
-        this.x = this.object.x;
-        this.z = this.object.z;
-        this.xCoordElement.value = this.object.x as unknown as string;
-        this.zCoordElement.value = this.object.z as unknown as string;
+    onTileChange(object: MatrixObject): void {
+        this.object = object;
+        this.xCoordElement.value = object.x as unknown as string;
+        this.zCoordElement.value = object.z as unknown as string;
 
         this.populateFloorElements();
 
@@ -232,11 +214,11 @@ export default class TileInspector extends Dialog {
 
     add(): void {
         (new Select(this.scene, this.matrix)).show('Texture', getTextures(), (texture: string | false) => {
-            if (!texture || !this.object || this.x == undefined || this.z == undefined) {
+            if (!texture || !this.object || this.object.x == undefined || this.object.z == undefined) {
                 return;
             }
 
-            this.matrix.addFloorTileAt(this.x, this.z, texture as Texture);
+            this.matrix.addFloorTileAt(this.object.x, this.object.z, texture as Texture);
             this.object.drawFloor();
             this.populateFloorElements();
         });
