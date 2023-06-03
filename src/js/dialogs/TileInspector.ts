@@ -1,4 +1,4 @@
-import Events from "../Util/Events";
+import Events, {EventName} from "../Util/Events";
 import FloorTile from "../core/Matrix/FloorTile";
 import Dialog from "./Dialog";
 import MatrixObject from "../core/Matrix/MatrixObject";
@@ -33,7 +33,7 @@ export default class TileInspector extends Dialog {
     }
 
     override onOpen() {
-        this.pointerDownListener = Events.listen('pointerdown-left', (event: PointerEvent) => this.onMatrixClick(event));
+        this.pointerDownListener = Events.listen(EventName.PointerDownLeft, (event: PointerEvent) => this.onMatrixClick(event));
     }
 
     override onClose() {
