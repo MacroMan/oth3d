@@ -24,7 +24,7 @@ export default class Matrix {
             this.matrix[x] = [];
 
             for (let z = 1; z <= height; z++) {
-                this.matrix[x][z] = new MatrixObject(this.scene, x, z);
+                this.matrix[x][z] = new MatrixObject(this.scene, "string", z);
             }
         }
     }
