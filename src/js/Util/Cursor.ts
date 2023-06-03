@@ -1,16 +1,16 @@
 /**
  * Helpers for changing the cursor
  */
-export interface CursorType {
-    Default: "default",
-    Pointer: "pointer",
-    Wait: "wait",
-    Crosshair: "crosshair",
-    Move: 'move',
-    Grab: 'grab',
-    Grabbing: "grabbing",
-    ResizeX: 'ew-resize',
-    ResizeZ: 'ns-resize',
+export enum CursorType {
+    Default = "default",
+    Pointer = "pointer",
+    Wait = "wait",
+    Crosshair = "crosshair",
+    Move = 'move',
+    Grab = 'grab',
+    Grabbing = "grabbing",
+    ResizeX = 'ew-resize',
+    ResizeZ = 'ns-resize',
 }
 
 export default class Cursor {
