@@ -1,11 +1,14 @@
 import MatrixObject from "./Matrix/MatrixObject"
-import {Texture} from "./Matrix/FloorTypes";
-import {MatrixEntry} from "./LevelTypes";
+import { Texture } from "./Matrix/FloorTypes";
+import { MatrixEntry } from "./LevelTypes";
 import Scene from "./Scene";
+import Events, { EventName } from "../Util/Events";
 
 export default class Matrix {
     private readonly matrix: any[];
     private readonly scene: Scene;
+    private hoveredTile: undefined | MatrixObject;
+    private selectedTile: undefined | MatrixObject;
 
     constructor(scene: Scene, width: number, height: number, levelMatrix: Array<MatrixEntry>) {
         this.scene = scene;
@@ -13,6 +16,7 @@ export default class Matrix {
 
         this.initializeMatrix(width, height);
         this.populateMatrix(levelMatrix);
+        this.setupEvents();
     }
 
     initializeMatrix(width: number, height: number): void {
@@ -27,8 +31,33 @@ export default class Matrix {
 
     populateMatrix(levelData: Array<MatrixEntry>) {
         levelData.forEach(data => {
-            this.matrix[data.x][data.z].addFloorTile((<any>Texture)[data.t]);
+            this.matrix[data.x][data.z].addFloorTile((<any> Texture)[data.t]);
         });
+    }
+
+    setupEvents() {
+        [{
+            listen: EventName.PointerMove,
+            fire: EventName.TileChange,
+            property: this.hoveredTile,
+        }, {
+            listen: EventName.PointerDownLeft,
+            fire: EventName.TileSelect,
+            property: this.selectedTile,
+        }].forEach((eventData) => {
+            Events.listen(eventData.listen, (event: PointerEvent) => {
+                let object = this.scene.getIntersectedFloors(event, 'floor')[0];
+                if (!object) {
+                    return;
+                }
+
+                const matrixObject = this.getObjectAt(object.userData["config"].x, object.userData["config"].z);
+
+                eventData.property = matrixObject;
+
+                Events.fire(eventData.fire, matrixObject);
+            });
+        })
     }
 
     draw(): void {
@@ -41,6 +70,14 @@ export default class Matrix {
 
     getObjectAt(x: number, z: number): MatrixObject {
         return this.matrix[x][z];
+    }
+
+    get hoveredObject(): undefined | MatrixObject {
+        return this.hoveredTile;
+    }
+
+    get selectedObject(): undefined | MatrixObject {
+        return this.selectedTile;
     }
 
     addFloorTileAt(x: number, z: number, texture: Texture): MatrixObject {
