@@ -1,4 +1,4 @@
-import Events from "../Util/Events";
+import Events, {EventName} from "../Util/Events";
 import {Camera, WebGLRenderer} from "three";
 import Scene from "./Scene";
 import {MapControls} from "../Util/OrbitControls";
@@ -22,6 +22,6 @@ export default class AnimationLoop {
 
         this.controls.update();
         this.renderer.render(this.scene.scene, this.camera);
-        Events.fire('animate');
+        Events.fire(EventName.Animate);
     }
 }

@@ -1,9 +1,31 @@
+interface Event {
+    id: number;
+    name: string;
+    callback: Function;
+}
+
+export enum EventName {
+    PointerDownLeft = "pointer-down-left",
+    PointerDownMiddle = "pointer-down-middle",
+    PointerDownRight = "pointer-down-right",
+    PointerUpLeft = "pointer-up-left",
+    PointerUpMiddle = "pointer-up-middle",
+    PointerUpRight = "pointer-up-right",
+    MouseMove = "mousemove",
+    PointerMove = "pointermove",
+    Animate = "animate",
+    Controls = "controls",
+    ControlsDamping = "controls-damping",
+    ControlsZoom = "controls-zoom",
+    ControlsRotate = "controls-rotate",
+    ControlsPan = "controls-pan",
+}
+
+const listeners: Event[] = [];
+
 /**
  * Generic events fire/listen
  */
-
-const listeners: any[] = [];
-
 export default class Events {
     /**
      * Register a callback
@@ -12,7 +34,7 @@ export default class Events {
      * @param callback Callable to be invoked
      * @returns {number} Listener ID
      */
-    static listen(name: string, callback: Function) {
+    static listen(name: EventName, callback: Function) {
         return listeners.push({
             id: listeners.length,
             name: name,
@@ -38,7 +60,7 @@ export default class Events {
      *
      * @param name
      */
-    static removeListenersByName(name: string) {
+    static removeListenersByName(name: EventName) {
         listeners.slice().reverse().forEach((listener, index, object) => {
             if (listener.name === name) {
                 listeners.splice(object.length - 1 - index, 1);
@@ -52,7 +74,7 @@ export default class Events {
      * @param name
      * @param args
      */
-    static fire(name: string, ...args: any[]) {
+    static fire(name: EventName, ...args: any[]) {
         listeners.forEach(listener => {
             if (listener.name === name) {
                 listener.callback(...args);
@@ -64,17 +86,25 @@ export default class Events {
 /**
  * Register document events
  */
-['pointerdown', 'pointerup'].forEach(type => {
-    document.addEventListener(type, (event: any) => {
-        if (event.button === 0) {
-            Events.fire(type + '-left', event);
-        } else if (event.button === 1) {
-            Events.fire(type + '-middle', event);
-        } else if (event.button === 3) {
-            Events.fire(type + '-right', event);
-        }
-    });
+document.addEventListener('pointerdown', (event: any) => {
+    if (event.button === 0) {
+        Events.fire(EventName.PointerDownLeft, event);
+    } else if (event.button === 1) {
+        Events.fire(EventName.PointerDownMiddle, event);
+    } else if (event.button === 3) {
+        Events.fire(EventName.PointerDownRight, event);
+    }
 });
 
-document.addEventListener('pointermove', event => Events.fire('pointermove', event));
-document.addEventListener('mousemove', event => Events.fire('mousemove', event));
+document.addEventListener('pointerup', (event: any) => {
+    if (event.button === 0) {
+        Events.fire(EventName.PointerUpLeft, event);
+    } else if (event.button === 1) {
+        Events.fire(EventName.PointerUpMiddle, event);
+    } else if (event.button === 3) {
+        Events.fire(EventName.PointerUpRight, event);
+    }
+});
+
+document.addEventListener('pointermove', event => Events.fire(EventName.PointerMove, event));
+document.addEventListener('mousemove', event => Events.fire(EventName.MouseMove, event));

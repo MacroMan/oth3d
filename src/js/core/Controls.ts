@@ -1,4 +1,4 @@
-import Events from '../Util/Events';
+import Events, {EventName} from '../Util/Events';
 import {MapControls} from '../Util/OrbitControls';
 import {Camera, Vector3} from "three";
 import Render from "./Render";
@@ -24,11 +24,11 @@ export default class Controls {
         this.controls.dampingFactor = Config.controls.dampingFactor;
         this.polarAngle = Config.camera.polarAngle;
 
-        Events.listen('controls', (status: boolean) => this.controls.enabled = status);
-        Events.listen('controls-damping', (status: boolean) => this.controls.enableDamping = status);
-        Events.listen('controls-zoom', (status: boolean) => this.controls.enableZoom = status);
-        Events.listen('controls-rotate', (status: boolean) => this.controls.enableRotate = status);
-        Events.listen('controls-pan', (status: boolean) => this.controls.enablePan = status);
+        Events.listen(EventName.Controls, (status: boolean) => this.controls.enabled = status);
+        Events.listen(EventName.ControlsDamping, (status: boolean) => this.controls.enableDamping = status);
+        Events.listen(EventName.ControlsZoom, (status: boolean) => this.controls.enableZoom = status);
+        Events.listen(EventName.ControlsRotate, (status: boolean) => this.controls.enableRotate = status);
+        Events.listen(EventName.ControlsPan, (status: boolean) => this.controls.enablePan = status);
     }
 
     set polarAngle(angle: number) {
