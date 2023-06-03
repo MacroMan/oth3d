@@ -60,11 +60,11 @@ export default class MatrixObject {
      * Draw the topmost floor tile
      */
     drawFloor(): void {
-        this.floorTiles.forEach(tile => {
+        this.floorTiles.forEach((tile: FloorTile) => {
             tile.remove();
         });
 
-        const lastTile = this.floorTiles.at(-1);
+        const lastTile = this.floorTiles.at(-1) as FloorTile;
         if (lastTile) {
             lastTile.draw();
         }
