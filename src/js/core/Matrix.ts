@@ -3,9 +3,10 @@ import { Texture } from "./Matrix/FloorTypes";
 import { MatrixEntry } from "./LevelTypes";
 import Scene from "./Scene";
 import Events, { EventName } from "../Util/Events";
+import FloorTile from "./Matrix/FloorTile";
 
 export default class Matrix {
-    private readonly matrix: any[];
+    private readonly matrix: MatrixObject[][];
     private readonly scene: Scene;
     private hoveredTile: undefined | MatrixObject;
     private selectedTile: undefined | MatrixObject;
@@ -24,6 +25,7 @@ export default class Matrix {
             this.matrix[x] = [];
 
             for (let z = 1; z <= height; z++) {
+                // @ts-ignore Object is possibly 'undefined'. We're initializing above
                 this.matrix[x][z] = new MatrixObject(this.scene, x, z);
             }
         }
@@ -31,7 +33,11 @@ export default class Matrix {
 
     populateMatrix(levelData: Array<MatrixEntry>) {
         levelData.forEach(data => {
-            this.matrix[data.x][data.z].addFloorTile((<any> Texture)[data.t]);
+            // @ts-ignore Object is possibly 'undefined'. Err, no, it's not
+            if (this.matrix[data.x] && this.matrix[data.x][data.z]) {
+                // @ts-ignore
+                this.matrix[data.x][data.z].addFloorTile((<any> Texture)[data.t]);
+            }
         });
     }
 
@@ -68,8 +74,13 @@ export default class Matrix {
         });
     }
 
-    getObjectAt(x: number, z: number): MatrixObject {
-        return this.matrix[x][z];
+    getObjectAt(x: number, z: number): undefined | MatrixObject {
+        if (this.matrix[x]) {
+            // @ts-ignore Object is possibly 'undefined'.
+            return this.matrix[x][z];
+        }
+
+        return;
     }
 
     get hoveredObject(): undefined | MatrixObject {
@@ -80,7 +91,13 @@ export default class Matrix {
         return this.selectedTile;
     }
 
-    addFloorTileAt(x: number, z: number, texture: Texture): MatrixObject {
-        return this.matrix[x][z].addFloorTile(texture);
+    addFloorTileAt(x: number, z: number, texture: Texture): undefined | FloorTile {
+        // @ts-ignore Object is possibly 'undefined'. Err, no, it's not
+        if (this.matrix[x] && this.matrix[x][z]) {
+            // @ts-ignore
+            return this.matrix[x][z].addFloorTile(texture);
+        }
+
+        return;
     }
 }
