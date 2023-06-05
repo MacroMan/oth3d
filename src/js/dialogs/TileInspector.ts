@@ -6,7 +6,7 @@ import ArrayHelper from "../Util/ArrayHelper";
 import Scene from "../core/Scene";
 import Matrix from "../core/Matrix";
 import Select from "./Select";
-import { getTextures, Texture } from "../core/Matrix/FloorTypes";
+import { getTextures, FloorTexture } from "../core/Matrix/FloorTypes";
 
 /**
  * Allows clicking on any tile to get and change floor and wall information
@@ -218,7 +218,7 @@ export default class TileInspector extends Dialog {
                 return;
             }
 
-            this.matrix.addFloorTileAt(this.object.x, this.object.z, texture as Texture);
+            this.matrix.addFloorTileAt(this.object.x, this.object.z, texture as FloorTexture);
             this.object.drawFloor();
             this.populateFloorElements();
         });

@@ -1,13 +1,22 @@
 export interface Config {
-    readonly insideTexture: Texture;
-    readonly outsideTexture: Texture;
-    readonly window?: boolean;
+    readonly x: number;
+    readonly z: number;
+    readonly side: Side;
+    readonly texture: WallTexture;
 }
 
-export enum Texture {
-    brick = "brick",
-    tileWhite = "tile-white",
-    tileBlue = "tile-blue",
-    tileGreen = "tile-green",
-    tileYellow = "tile-yellow",
+export enum WallTexture {
+    Brick01 = "brick-01",
+    Brick01White = "brick-01-white",
+    TileWhite = "tile-white",
+    TileBlue = "tile-blue",
+    TileGreen = "tile-green",
+    TileYellow = "tile-yellow",
+}
+
+export enum Side {
+    North = "north",
+    East = "east",
+    South = "south",
+    West = "west",
 }
