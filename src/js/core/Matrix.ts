@@ -1,9 +1,11 @@
 import MatrixObject from "./Matrix/MatrixObject"
-import { Texture } from "./Matrix/FloorTypes";
-import { MatrixEntry } from "./LevelTypes";
+import { FloorTexture } from "./Matrix/FloorTypes";
+import { MatrixEntry, Wall } from "./LevelTypes";
 import Scene from "./Scene";
 import Events, { EventName } from "../Util/Events";
 import FloorTile from "./Matrix/FloorTile";
+import { Side, WallTexture } from "./Matrix/WallTypes";
+import WallTile from "./Matrix/WallTile";
 
 export default class Matrix {
     private readonly matrix: MatrixObject[][];
@@ -32,12 +34,12 @@ export default class Matrix {
     }
 
     populateMatrix(levelData: Array<MatrixEntry>) {
-        levelData.forEach(data => {
-            // @ts-ignore Object is possibly 'undefined'. Err, no, it's not
-            if (this.matrix[data.x] && this.matrix[data.x][data.z]) {
-                // @ts-ignore
-                this.matrix[data.x][data.z].addFloorTile((<any> Texture)[data.t]);
-            }
+        levelData.forEach((data: MatrixEntry) => {
+            this.addFloorTileAt(data.x, data.z, data.floorTexture as FloorTexture);
+
+            data.walls?.forEach((wall: Wall) => {
+                this.addWallTileAt(data.x, data.z, wall.side as Side, wall.texture as WallTexture);
+            });
         });
     }
 
@@ -91,11 +93,21 @@ export default class Matrix {
         return this.selectedTile;
     }
 
-    addFloorTileAt(x: number, z: number, texture: Texture): undefined | FloorTile {
+    addFloorTileAt(x: number, z: number, texture: FloorTexture): undefined | FloorTile {
         // @ts-ignore Object is possibly 'undefined'. Err, no, it's not
         if (this.matrix[x] && this.matrix[x][z]) {
             // @ts-ignore
             return this.matrix[x][z].addFloorTile(texture);
+        }
+
+        return;
+    }
+
+    addWallTileAt(x: number, z: number, side: Side, texture: WallTexture): undefined | WallTile {
+        // @ts-ignore Object is possibly 'undefined'. Err, no, it's not
+        if (this.matrix[x] && this.matrix[x][z]) {
+            // @ts-ignore
+            return this.matrix[x][z].addWallTile(side, texture);
         }
 
         return;

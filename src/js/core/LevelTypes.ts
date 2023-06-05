@@ -5,14 +5,14 @@ export type LevelData = {
 };
 
 export type MatrixEntry = {
-    x: number,  // x coord
-    z: number,  // z coord
-    t: string,  // Texture
-    b: boolean, // Buildable?
-    w?: Wall[],      // Wall data
+    x: number,
+    z: number,
+    floorTexture: string,
+    buildable: boolean,
+    walls?: Wall[],
 };
 
 export type Wall = {
-    i: string, // Internal texture
-    o: string, // External texture
+    texture: string,
+    side: string,
 };

@@ -1,17 +1,28 @@
 import FloorTile from "./FloorTile";
 import WallTile from "./WallTile";
-import { Texture } from "./FloorTypes";
+import { FloorTexture } from "./FloorTypes";
+import { WallTexture } from "./WallTypes";
 import Scene from "../Scene";
+import { Side } from "./WallTypes";
 
-/**
- * Represents a collection of floor and wall tiles at a specific in-game coordinate
- */
+interface WallTiles {
+    north: WallTile[];
+    east: WallTile[];
+    south: WallTile[];
+    west: WallTile[];
+}
+
 export default class MatrixObject {
+    private readonly scene: Scene;
     public readonly x: number;
     public readonly z: number;
     public readonly floorTiles: FloorTile[] = [];
-    public readonly wallTiles: WallTile[] = [];
-    private readonly scene: Scene;
+    public readonly wallTiles: WallTiles = {
+        north: [],
+        east: [],
+        south: [],
+        west: [],
+    };
 
     constructor(scene: Scene, x: number, z: number) {
         this.scene = scene;
@@ -19,15 +30,17 @@ export default class MatrixObject {
         this.z = z;
 
         // Add default floor tile of grass
-        this.floorTiles.push(new FloorTile(this.scene, { x: this.x, z: this.z, texture: Texture.grass }));
+        this.addFloorTile(FloorTexture.grass);
     }
 
     /**
      * Add a new floor tile. Only the most recently added tile will be visible.
      */
-    addFloorTile(texture: Texture): FloorTile {
-        const floorTile = new FloorTile(this.scene, { x: this.x, z: this.z, texture: texture })
+    addFloorTile(texture: FloorTexture): FloorTile {
+        const floorTile = new FloorTile(this.scene, { x: this.x, z: this.z, texture: texture });
         this.floorTiles.push(floorTile);
+
+        this.drawFloor();
         return floorTile;
     }
 
@@ -39,6 +52,22 @@ export default class MatrixObject {
             this.floorTiles.pop();
 
             this.drawFloor();
+        }
+    }
+
+    addWallTile(side: Side, texture: WallTexture): WallTile {
+        const wallTile = new WallTile(this.scene, { x: this.x, z: this.z, texture, side });
+        this.wallTiles[side].push(wallTile);
+
+        this.drawWalls();
+        return wallTile;
+    }
+
+    popWallTile(side: Side): void {
+        if (this.wallTiles[side].length > 1) {
+            this.wallTiles[side].pop();
+
+            this.drawWalls();
         }
     }
 
@@ -65,9 +94,20 @@ export default class MatrixObject {
     }
 
     /**
-     * Draw the wall tiles, the topmost in each direction
+     * Draw the wall tiles, the topmost on each side
      */
     drawWalls() {
+        [Side.North, Side.East, Side.South, Side.West].forEach((side: Side) => {
+            this.wallTiles[side].forEach((tile: WallTile) => {
+                tile.remove();
+            });
 
+            const lastTile = this.wallTiles[side].at(-1) as WallTile;
+
+            console.log(lastTile);
+            if (lastTile) {
+                lastTile.draw();
+            }
+        });
     }
 }

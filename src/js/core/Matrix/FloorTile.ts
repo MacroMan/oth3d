@@ -1,12 +1,12 @@
-import {Config} from "./FloorTypes";
+import { Config } from "./FloorTypes";
 import Unit from "../../Util/Unit";
-import {FrontSide, Mesh, MeshPhongMaterial, PlaneGeometry, RepeatWrapping, TextureLoader} from "three";
+import { FrontSide, Mesh, MeshPhongMaterial, PlaneGeometry, RepeatWrapping, TextureLoader } from "three";
 import Scene from "../Scene";
 
 export default class FloorTile {
+    private readonly scene: Scene;
     public readonly config: Config;
     private mesh: Mesh<PlaneGeometry, MeshPhongMaterial> | undefined;
-    private readonly scene: Scene;
     private isDrawn: boolean;
 
     constructor(scene: Scene, config: Config) {
@@ -28,7 +28,7 @@ export default class FloorTile {
         texture.repeat.set(1, 1);
         texture.wrapS = RepeatWrapping;
         texture.wrapT = RepeatWrapping;
-        const material = new MeshPhongMaterial({map: texture, side: FrontSide, opacity: 1, transparent: true});
+        const material = new MeshPhongMaterial({ map: texture, side: FrontSide, opacity: 1, transparent: true });
 
         this.mesh = new Mesh(geometry, material);
 

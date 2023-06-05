@@ -1,11 +1,10 @@
 export interface Config {
     readonly x: number;
     readonly z: number;
-    readonly texture: Texture;
-    buildable?: boolean;
+    readonly texture: FloorTexture;
 }
 
-export enum Texture {
+export enum FloorTexture {
     grass = "grass",
     corridor = "corridor",
     path = "path",
@@ -13,5 +12,5 @@ export enum Texture {
 }
 
 export function getTextures(): Array<string> {
-    return Object.entries(Texture).map(([value]) => (value));
+    return Object.entries(FloorTexture).map(([value]) => (value));
 }
