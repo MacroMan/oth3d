@@ -1,18 +1,11 @@
 <template>
   <div>
+    <HudMenu />
     <BankManagerModal />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-
+import HudMenu from '../hud/HudMenu.vue'
 import BankManagerModal from './bankManager/BankManagerModal.vue'
-import { useFinanceStore } from '../../../stores/finance'
-
-const financeStore = useFinanceStore()
-
-onMounted(() => {
-  financeStore.openBankManagerModal()
-})
 </script>
