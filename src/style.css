@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Base palette — Retro Hospital */
+  --color-hospital-mint: #a8e6cf;
+  --color-hospital-blue: #89cff0;
+  --color-hospital-peach: #ffd3b6;
+  --color-hospital-lavender: #d5aaff;
+  --color-hospital-grey: #e0e0e0;
+
+  /* Accent palette — Emergency / High Contrast Gameplay */
+  --color-emergency-red: #d90429;
+  --color-emergency-blue: #2b2d42;
+  --color-emergency-white: #edf2f4;
+  --color-emergency-amber: #fca311;
+  --color-emergency-black: #000000;
+
+  /* Semantic aliases */
+  --color-brand-primary: #a8e6cf;
+  --color-brand-secondary: #89cff0;
+  --color-brand-tertiary: #d5aaff;
+  --color-brand-surface: #e0e0e0;
+  --color-brand-warm: #ffd3b6;
+
+  --color-ui-bg: #edf2f4;
+  --color-ui-panel: #e0e0e0;
+  --color-ui-panel-alt: #ffd3b6;
+  --color-ui-text: #2b2d42;
+  --color-ui-text-inverse: #edf2f4;
+  --color-ui-border: #89cff0;
+
+  --color-state-success: #a8e6cf;
+  --color-state-info: #89cff0;
+  --color-state-notice: #d5aaff;
+  --color-state-warning: #fca311;
+  --color-state-danger: #d90429;
+
+  /* Fonts */
+  --font-display: 'Trebuchet MS', 'Verdana', sans-serif;
+  --font-ui: 'Trebuchet MS', 'Verdana', sans-serif;
+
+  /* Radius */
+  --radius-game: 0.75rem;
+
+  /* Shadows */
+  --shadow-panel: 0 2px 0 #2b2d42, 0 4px 12px rgba(43, 45, 66, 0.18);
+  --shadow-button: 0 2px 0 #2b2d42;
+  --shadow-danger: 0 0 0 2px rgba(217, 4, 41, 0.2);
+}
+
+@layer base {
+  body {
+    @apply bg-ui-bg text-ui-text font-ui;
+  }
+}
