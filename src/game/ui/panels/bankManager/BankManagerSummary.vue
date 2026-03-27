@@ -23,23 +23,6 @@
         <p class="mt-2 text-3xl font-bold">{{ formatBankCurrency(interestPayment) }}</p>
       </article>
     </div>
-
-    <div class="mt-auto grid gap-3 pt-3">
-      <button
-        type="button"
-        class="rounded-2xl border-2 border-emergency-white bg-emergency-white px-4 py-3 font-semibold text-emergency-blue transition hover:-translate-y-0.5"
-        @click="emit('save')"
-      >
-        Save Changes
-      </button>
-      <button
-        type="button"
-        class="rounded-2xl border-2 border-white/30 bg-transparent px-4 py-3 font-semibold text-emergency-white transition hover:-translate-y-0.5 hover:bg-white/10"
-        @click="emit('reset')"
-      >
-        Reset
-      </button>
-    </div>
   </aside>
 </template>
 
@@ -52,11 +35,6 @@ const props = defineProps<{
   netPosition: number
   currentLoan: number
   interestPayment: number
-}>()
-
-const emit = defineEmits<{
-  save: []
-  reset: []
 }>()
 
 const netPosition = computed(() => props.netPosition)

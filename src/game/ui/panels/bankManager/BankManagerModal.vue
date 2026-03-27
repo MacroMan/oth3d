@@ -62,8 +62,6 @@
         :net-position="netPosition"
         :current-loan="form.currentLoan"
         :interest-payment="form.interestPayment"
-        @save="saveForm"
-        @reset="financeStore.resetForm"
       />
 
       <InsuranceEntryModal
@@ -87,12 +85,11 @@ import BankManagerSummary from './BankManagerSummary.vue'
 import InsuranceCompanyRow from './InsuranceCompanyRow.vue'
 import InsuranceEntryModal from './InsuranceEntryModal.vue'
 import LoanStepperField from './LoanStepperField.vue'
-import { formatBankCurrency, loanStep, type BankManagerForm } from './bankManager'
+import { formatBankCurrency, loanStep } from './bankManager'
 import { useFinanceStore } from '../../../../stores/finance'
 
 const emit = defineEmits<{
   close: []
-  save: [value: BankManagerForm]
 }>()
 
 const financeStore = useFinanceStore()
@@ -116,9 +113,5 @@ const currentLoan = computed({
 const closeModal = () => {
   financeStore.closeBankManagerModal()
   emit('close')
-}
-
-const saveForm = () => {
-  emit('save', financeStore.saveForm())
 }
 </script>

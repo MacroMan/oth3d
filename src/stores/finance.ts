@@ -3,7 +3,6 @@ import { computed, reactive, ref } from 'vue'
 
 import {
   buildBankManagerForm,
-  cloneBankManagerForm,
   normalizeNumber,
   type BankManagerForm,
   type BankManagerInitialValue,
@@ -51,11 +50,6 @@ export const useFinanceStore = defineStore('finance', () => {
     activeInsuranceIndex.value = null
   }
 
-  const resetForm = () => {
-    Object.assign(form, buildBankManagerForm(initialValue.value))
-    activeInsuranceIndex.value = null
-  }
-
   const updateCurrentLoan = (value: number | string) => {
     form.currentLoan = typeof value === 'number' ? value : Number(value)
   }
@@ -68,8 +62,6 @@ export const useFinanceStore = defineStore('finance', () => {
     activeInsuranceIndex.value = null
   }
 
-  const saveForm = () => cloneBankManagerForm(form)
-
   return {
     form,
     isBankManagerModalOpen,
@@ -81,11 +73,9 @@ export const useFinanceStore = defineStore('finance', () => {
     hydrateForm,
     openBankManagerModal,
     closeBankManagerModal,
-    resetForm,
     updateCurrentLoan,
     openInsuranceModal,
     closeInsuranceModal,
-    saveForm,
   }
 })
 
