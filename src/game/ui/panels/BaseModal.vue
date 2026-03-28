@@ -5,7 +5,7 @@
         <div>
           <p
             v-if="eyebrow"
-            class="text-xs font-semibold tracking-[0.22em] text-emergency-blue uppercase"
+            class="text-xs font-semibold tracking-hud-overline text-emergency-blue uppercase"
           >
             {{ eyebrow }}
           </p>
@@ -48,7 +48,7 @@ withDefaults(
     overlayClass:
       'fixed inset-0 z-40 flex items-center justify-center bg-emergency-blue/55 px-4 py-8 backdrop-blur-sm',
     panelClass:
-      'relative w-full max-w-5xl overflow-hidden rounded-[28px] border-4 border-emergency-blue bg-ui-bg text-ui-text shadow-[0_14px_0_#2b2d42,0_26px_40px_rgba(43,45,66,0.3)]',
+      'relative w-full max-w-5xl overflow-hidden rounded-modal-panel border-4 border-emergency-blue bg-ui-bg text-ui-text shadow-modal-panel',
     headerClass:
       'flex items-center justify-between border-b-4 border-emergency-blue bg-linear-to-r from-hospital-blue via-hospital-mint to-hospital-peach px-6 py-5',
     titleClass: 'mt-1 font-display text-3xl font-bold text-emergency-blue',

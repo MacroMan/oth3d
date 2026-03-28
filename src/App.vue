@@ -4,7 +4,9 @@
 
     <section class="pointer-events-none relative z-10 flex h-full items-end p-6 sm:p-10">
       <div class="max-w-md rounded-3xl border border-white/10 bg-black/35 p-6 backdrop-blur-md">
-        <p class="text-xs font-medium tracking-[0.25em] text-amber-300 uppercase">Three.js Scene</p>
+        <p class="text-xs font-medium tracking-scene-kicker text-amber-300 uppercase">
+          Three.js Scene
+        </p>
         <h1 class="mt-3 text-3xl font-semibold text-white">
           Drag from the floor to rotate the world around that point.
         </h1>

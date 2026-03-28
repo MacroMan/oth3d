@@ -1,10 +1,12 @@
 <template>
-  <div
-    class="grid gap-3 rounded-2xl border-2 border-ui-border bg-white p-4 md:grid-cols-[1.2fr_0.9fr_auto]"
-  >
-    <BankManagerField :label="`Insurance Company ${index + 1}`" :value="companyName" />
+  <div class="grid gap-3 rounded-2xl border-2 border-ui-border bg-white p-4 md:grid-cols-5">
+    <BankManagerField
+      class="md:col-span-2"
+      :label="`Insurance Company ${index + 1}`"
+      :value="companyName"
+    />
 
-    <BankManagerField label="Money Owed" :value="moneyOwed" />
+    <BankManagerField class="md:col-span-2" label="Money Owed" :value="moneyOwed" />
 
     <div class="flex items-end">
       <button

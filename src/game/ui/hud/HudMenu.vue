@@ -1,39 +1,44 @@
 <template>
   <section class="pointer-events-auto absolute top-4 left-4 z-20 max-w-full">
     <div
-      class="flex flex-wrap items-start gap-2 rounded-[10px] border-2 border-[#1c3a52] bg-[#0e5d88]/95 p-1 shadow-[0_4px_0_#0b2e43]"
+      class="flex flex-wrap items-start gap-2 rounded-hud-shell border-2 border-hud-shell-border bg-hud-shell/95 p-1 shadow-hud-shell"
     >
       <button
         type="button"
-        class="flex h-16 w-16 items-center justify-center rounded-[6px] border-2 border-[#f3d37f] bg-linear-to-b from-[#f6e8aa] to-[#d09a3d] text-[2.7rem] leading-none font-black text-[#0a5c84] shadow-[inset_0_0_0_2px_#fff7cd]"
+        class="rounded-hud-card border-2 border-hud-gold-border bg-linear-to-b from-hud-gold-top to-hud-gold-bottom shadow-hud-cream-inset transition-transform hover:scale-105"
         aria-label="Open finance menu"
         @click="financeStore.openBankManagerModal()"
       >
-        $
+        <img
+          :src="financeButton.icon"
+          alt=""
+          aria-hidden="true"
+          class="h-16 w-16 rounded-hud-inner object-cover"
+        />
       </button>
 
       <div
-        class="flex h-16 min-w-36 flex-col justify-between rounded-[6px] border-2 border-[#f3d37f] bg-[#f1ead0] p-1 shadow-[inset_0_0_0_2px_#fff7cd]"
+        class="flex h-16 min-w-36 flex-col justify-between rounded-hud-card border-2 border-hud-gold-border bg-hud-card p-1 shadow-hud-cream-inset"
       >
         <div
-          class="grid grid-cols-6 gap-0.5 rounded-[4px] border border-[#494233] bg-[#2e2a22] p-1 text-center font-mono text-[1.45rem] font-bold tracking-[0.08em] text-[#d8d3bf]"
+          class="grid grid-cols-6 gap-0.5 rounded-hud-inner border border-hud-display-border bg-hud-display-bg p-1 text-center font-mono text-hud-digits font-bold tracking-hud-digits text-hud-display-text"
         >
           <span
             v-for="(digit, index) in balanceDigits"
             :key="`${digit}-${index}`"
-            class="rounded-[2px] bg-[#171511] px-1 py-0.5"
+            class="rounded-hud-pixel bg-hud-display-slot px-1 py-0.5"
           >
             {{ digit }}
           </span>
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="text-[0.65rem] font-bold tracking-[0.18em] text-[#8e2342] uppercase"
+          <span class="text-xs font-bold tracking-hud-label text-hud-rep-label uppercase"
             >Rep</span
           >
-          <div class="h-3 flex-1 rounded-full border border-[#15435d] bg-[#0e2740] p-[1px]">
+          <div class="h-3 flex-1 rounded-full border border-hud-rep-track-border bg-hud-rep-track-bg p-px">
             <div
-              class="h-full rounded-full bg-linear-to-r from-[#ffb347] via-[#f6e36f] to-[#4fda67]"
+              class="h-full rounded-full bg-linear-to-r from-hud-rep-start via-hud-rep-mid to-hud-rep-end"
               :style="{ width: `${reputationPercent}%` }"
             ></div>
           </div>
@@ -41,42 +46,54 @@
       </div>
 
       <div
-        class="flex h-16 w-24 flex-col items-center justify-center rounded-[6px] border-2 border-[#f3d37f] bg-[#f4ecdc] text-[#c5401f] shadow-[inset_0_0_0_2px_#fff7cd]"
+        class="flex h-16 w-24 flex-col items-center justify-center rounded-hud-card border-2 border-hud-gold-border bg-hud-date-bg text-hud-date-text shadow-hud-cream-inset"
       >
-        <span class="text-xs font-bold tracking-[0.22em] uppercase">Date</span>
-        <span class="mt-1 text-[1.9rem] leading-none font-bold">{{ currentDate }}</span>
+        <span class="text-xs font-bold tracking-hud-overline uppercase">Date</span>
+        <span class="mt-1 text-hud-date leading-none font-bold">{{ currentDate }}</span>
       </div>
 
       <div
-        class="flex h-16 items-stretch gap-1 rounded-[6px] border border-[#86dfff]/55 bg-[#106d9f] px-1 py-1"
+        class="flex h-16 items-stretch gap-1 rounded-hud-card border border-hud-menu-border/55 bg-hud-menu-bg px-1 py-1"
       >
         <button
           v-for="button in primaryButtons"
           :key="button.label"
           type="button"
-          class="flex h-full min-w-14 items-center justify-center rounded-[4px] border border-[#8fe8ff] bg-linear-to-b from-[#37b6df] to-[#11729f] px-3 text-[0.55rem] font-bold tracking-[0.14em] text-[#dff7ff] uppercase shadow-[inset_0_0_0_1px_#83ebff]"
+          :aria-label="button.ariaLabel"
+          class="rounded-hud-inner border border-hud-button-border bg-linear-to-b from-hud-button-top to-hud-button-bottom p-0 shadow-hud-button-inset transition-transform hover:scale-105"
         >
-          {{ button.label }}
+          <img
+            :src="button.icon"
+            alt=""
+            aria-hidden="true"
+            class="h-14 min-w-14 rounded-sm object-cover"
+          />
         </button>
       </div>
 
       <div class="group relative h-16 min-w-64 flex-1">
         <div
-          class="flex h-full items-center rounded-[6px] border border-[#3eb8db] bg-linear-to-b from-[#08131b] to-[#05090d] px-4 text-sm font-bold tracking-[0.12em] text-[#2ca4cf] shadow-[inset_0_0_0_1px_#0f5470]"
+          class="flex h-full items-center rounded-hud-card border border-hud-status-border bg-linear-to-b from-hud-status-top to-hud-status-bottom px-4 text-sm font-bold tracking-hud-status text-hud-status-text shadow-hud-status-inset"
         >
           <span>{{ statusMessage }}</span>
         </div>
 
         <div
-          class="pointer-events-none absolute top-full left-0 mt-2 hidden min-w-full grid-cols-7 gap-1 rounded-[6px] border border-[#86dfff]/55 bg-[#106d9f] p-1 group-hover:grid group-hover:pointer-events-auto"
+          class="pointer-events-none absolute top-full left-0 mt-2 hidden min-w-full grid-cols-7 gap-1 rounded-hud-card border border-hud-menu-border/55 bg-hud-menu-bg p-1 group-hover:grid group-hover:pointer-events-auto"
         >
           <button
             v-for="button in secondaryButtons"
             :key="button.label"
             type="button"
-            class="flex min-h-14 items-center justify-center rounded-[4px] border border-[#8fe8ff] bg-linear-to-b from-[#37b6df] to-[#11729f] px-2 text-center text-[0.52rem] font-bold tracking-[0.12em] text-[#dff7ff] uppercase shadow-[inset_0_0_0_1px_#83ebff]"
+            :aria-label="button.ariaLabel"
+            class="rounded-hud-inner border border-hud-button-border bg-linear-to-b from-hud-button-top to-hud-button-bottom p-0 shadow-hud-button-inset transition-transform hover:scale-105"
           >
-            {{ button.label }}
+            <img
+              :src="button.icon"
+              alt=""
+              aria-hidden="true"
+              class="h-14 w-14 rounded-sm object-cover"
+            />
           </button>
         </div>
       </div>
@@ -93,21 +110,69 @@ import { useFinanceStore } from '../../../stores/finance'
 const financeStore = useFinanceStore()
 const { form } = storeToRefs(financeStore)
 
+const financeButton = {
+  icon: '/assets/ui/hud/menu/finance.png',
+}
+
 const primaryButtons = [
-  { label: 'Build Rooms' },
-  { label: 'Furnish Corridor' },
-  { label: 'Edit Room' },
-  { label: 'Hire Staff' },
+  {
+    label: 'Build Rooms',
+    ariaLabel: 'Open build rooms menu',
+    icon: '/assets/ui/hud/menu/build-rooms.png',
+  },
+  {
+    label: 'Furnish Corridor',
+    ariaLabel: 'Open furnish corridor menu',
+    icon: '/assets/ui/hud/menu/furnish.png',
+  },
+  {
+    label: 'Edit Room',
+    ariaLabel: 'Open edit room menu',
+    icon: '/assets/ui/hud/menu/edit-rooms.png',
+  },
+  {
+    label: 'Hire Staff',
+    ariaLabel: 'Open hire staff menu',
+    icon: '/assets/ui/hud/menu/hire-staff.png',
+  },
 ]
 
 const secondaryButtons = [
-  { label: 'Staff Management' },
-  { label: 'Town Map' },
-  { label: 'Drug Casebook' },
-  { label: 'Research' },
-  { label: 'Level Status' },
-  { label: 'Charts' },
-  { label: 'Policy' },
+  {
+    label: 'Staff Management',
+    ariaLabel: 'Open staff management menu',
+    icon: '/assets/ui/hud/menu/staff-management.png',
+  },
+  {
+    label: 'Town Map',
+    ariaLabel: 'Open town map menu',
+    icon: '/assets/ui/hud/menu/town-map.png',
+  },
+  {
+    label: 'Drug Casebook',
+    ariaLabel: 'Open drug casebook menu',
+    icon: '/assets/ui/hud/menu/drug-casebook.png',
+  },
+  {
+    label: 'Research',
+    ariaLabel: 'Open research menu',
+    icon: '/assets/ui/hud/menu/research.png',
+  },
+  {
+    label: 'Level Status',
+    ariaLabel: 'Open level status menu',
+    icon: '/assets/ui/hud/menu/status.png',
+  },
+  {
+    label: 'Charts',
+    ariaLabel: 'Open charts menu',
+    icon: '/assets/ui/hud/menu/charts.png',
+  },
+  {
+    label: 'Policy',
+    ariaLabel: 'Open policy menu',
+    icon: '/assets/ui/hud/menu/policy.png',
+  },
 ]
 
 const statusMessage = 'Hospital status nominal. Hover for management tools.'

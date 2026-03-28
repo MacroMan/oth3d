@@ -16,36 +16,92 @@
   --color-emergency-black: #000000;
 
   /* Semantic aliases */
-  --color-brand-primary: #a8e6cf;
-  --color-brand-secondary: #89cff0;
-  --color-brand-tertiary: #d5aaff;
-  --color-brand-surface: #e0e0e0;
-  --color-brand-warm: #ffd3b6;
+  --color-brand-primary: var(--color-hospital-mint);
+  --color-brand-secondary: var(--color-hospital-blue);
+  --color-brand-tertiary: var(--color-hospital-lavender);
+  --color-brand-surface: var(--color-hospital-grey);
+  --color-brand-warm: var(--color-hospital-peach);
 
-  --color-ui-bg: #edf2f4;
-  --color-ui-panel: #e0e0e0;
-  --color-ui-panel-alt: #ffd3b6;
-  --color-ui-text: #2b2d42;
-  --color-ui-text-inverse: #edf2f4;
-  --color-ui-border: #89cff0;
+  --color-ui-bg: var(--color-emergency-white);
+  --color-ui-panel: var(--color-hospital-grey);
+  --color-ui-panel-alt: var(--color-hospital-peach);
+  --color-ui-text: var(--color-emergency-blue);
+  --color-ui-text-inverse: var(--color-emergency-white);
+  --color-ui-border: var(--color-hospital-blue);
 
-  --color-state-success: #a8e6cf;
-  --color-state-info: #89cff0;
-  --color-state-notice: #d5aaff;
-  --color-state-warning: #fca311;
-  --color-state-danger: #d90429;
+  /* HUD palette */
+  --color-hud-shell: color-mix(in srgb, var(--color-hospital-blue) 70%, var(--color-emergency-blue));
+  --color-hud-shell-border: var(--color-emergency-blue);
+  --color-hud-shell-shadow: var(--color-emergency-blue);
+  --color-hud-gold-border: color-mix(in srgb, var(--color-emergency-amber) 72%, var(--color-emergency-white));
+  --color-hud-gold-top: color-mix(in srgb, var(--color-emergency-white) 78%, var(--color-emergency-amber));
+  --color-hud-gold-bottom: color-mix(in srgb, var(--color-emergency-amber) 78%, var(--color-hospital-peach));
+  --color-hud-cream: color-mix(in srgb, var(--color-emergency-white) 85%, var(--color-hospital-peach));
+  --color-hud-card: color-mix(in srgb, var(--color-hospital-grey) 78%, var(--color-hospital-peach));
+  --color-hud-date-bg: color-mix(in srgb, var(--color-emergency-white) 82%, var(--color-hospital-peach));
+  --color-hud-date-text: color-mix(in srgb, var(--color-emergency-red) 74%, var(--color-emergency-amber));
+  --color-hud-display-border: #494233;
+  --color-hud-display-bg: #2e2a22;
+  --color-hud-display-text: #d8d3bf;
+  --color-hud-display-slot: #171511;
+  --color-hud-rep-label: color-mix(in srgb, var(--color-emergency-red) 58%, var(--color-emergency-blue));
+  --color-hud-rep-track-border: color-mix(in srgb, var(--color-hospital-blue) 24%, var(--color-emergency-blue));
+  --color-hud-rep-track-bg: color-mix(in srgb, var(--color-emergency-blue) 90%, var(--color-emergency-black));
+  --color-hud-rep-start: color-mix(in srgb, var(--color-emergency-amber) 78%, var(--color-hospital-peach));
+  --color-hud-rep-mid: color-mix(in srgb, var(--color-emergency-amber) 70%, var(--color-emergency-white));
+  --color-hud-rep-end: color-mix(in srgb, var(--color-hospital-mint) 82%, var(--color-hospital-blue));
+  --color-hud-menu-border: var(--color-hospital-blue);
+  --color-hud-menu-bg: color-mix(in srgb, var(--color-hospital-blue) 72%, var(--color-emergency-blue));
+  --color-hud-button-border: color-mix(in srgb, var(--color-hospital-blue) 88%, var(--color-emergency-white));
+  --color-hud-button-top: color-mix(in srgb, var(--color-hospital-blue) 85%, var(--color-hospital-mint));
+  --color-hud-button-bottom: color-mix(in srgb, var(--color-hospital-blue) 55%, var(--color-emergency-blue));
+  --color-hud-button-glow: color-mix(in srgb, var(--color-hospital-blue) 76%, var(--color-emergency-white));
+  --color-hud-status-border: color-mix(in srgb, var(--color-hospital-blue) 62%, var(--color-hospital-mint));
+  --color-hud-status-top: color-mix(in srgb, var(--color-emergency-blue) 76%, var(--color-emergency-black));
+  --color-hud-status-bottom: color-mix(in srgb, var(--color-emergency-black) 84%, var(--color-emergency-blue));
+  --color-hud-status-text: color-mix(in srgb, var(--color-hospital-blue) 80%, var(--color-hospital-mint));
+  --color-hud-status-glow: color-mix(in srgb, var(--color-hospital-blue) 28%, var(--color-emergency-blue));
+
+  --color-state-success: var(--color-hospital-mint);
+  --color-state-info: var(--color-hospital-blue);
+  --color-state-notice: var(--color-hospital-lavender);
+  --color-state-warning: var(--color-emergency-amber);
+  --color-state-danger: var(--color-emergency-red);
 
   /* Fonts */
   --font-display: 'Trebuchet MS', 'Verdana', sans-serif;
-  --font-ui: 'Trebuchet MS', 'Verdana', sans-serif;
+  --font-ui: var(--font-display);
 
   /* Radius */
   --radius-game: 0.75rem;
+  --radius-hud-shell: 0.625rem;
+  --radius-hud-card: 0.375rem;
+  --radius-hud-inner: 0.25rem;
+  --radius-hud-pixel: 0.125rem;
+  --radius-modal-panel: 1.75rem;
 
   /* Shadows */
-  --shadow-panel: 0 2px 0 #2b2d42, 0 4px 12px rgba(43, 45, 66, 0.18);
-  --shadow-button: 0 2px 0 #2b2d42;
-  --shadow-danger: 0 0 0 2px rgba(217, 4, 41, 0.2);
+  --shadow-panel: 0 2px 0 var(--color-emergency-blue), 0 4px 12px color-mix(in srgb, var(--color-emergency-blue) 18%, transparent);
+  --shadow-button: 0 2px 0 var(--color-emergency-blue);
+  --shadow-danger: 0 0 0 2px color-mix(in srgb, var(--color-emergency-red) 20%, transparent);
+  --shadow-modal-panel: 0 14px 0 var(--color-emergency-blue), 0 26px 40px color-mix(in srgb, var(--color-emergency-blue) 30%, transparent);
+  --shadow-modal-panel-sm: 0 12px 0 var(--color-emergency-blue), 0 18px 30px color-mix(in srgb, var(--color-emergency-black) 22%, transparent);
+  --shadow-hud-shell: 0 4px 0 var(--color-hud-shell-shadow);
+  --shadow-hud-cream-inset: inset 0 0 0 2px var(--color-hud-cream);
+  --shadow-hud-button-inset: inset 0 0 0 1px var(--color-hud-button-glow);
+  --shadow-hud-status-inset: inset 0 0 0 1px var(--color-hud-status-glow);
+
+  /* Typography */
+  --text-hud-digits: 1.45rem;
+  --text-hud-date: 1.9rem;
+  --tracking-scene-kicker: 0.25em;
+  --tracking-hud-digits: 0.08em;
+  --tracking-hud-status: 0.12em;
+  --tracking-hud-label: 0.18em;
+  --tracking-hud-overline: 0.22em;
+
+  /* Effects */
+  --blur-2xs: 2px;
 }
 
 @layer base {

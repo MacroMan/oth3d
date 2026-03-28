@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { fireEvent, render, screen } from '@testing-library/vue'
 import { createPinia } from 'pinia'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -15,53 +15,52 @@ const mountModal = () => {
 
   financeStore.openBankManagerModal()
 
-  return {
-    financeStore,
-    wrapper: mount(BankManagerModal, {
-      global: {
-        plugins: [pinia],
-        stubs: {
-          teleport: true,
-        },
+  render(BankManagerModal, {
+    global: {
+      plugins: [pinia],
+      stubs: {
+        teleport: true,
       },
-    }),
-  }
+    },
+  })
+
+  return { financeStore }
 }
 
 describe('BankManagerModal', () => {
   it('renders the required finance fields and insurance actions', () => {
-    const { wrapper } = mountModal()
+    mountModal()
 
-    expect(wrapper.text()).toContain('Bank Manager')
-    expect(wrapper.text()).toContain('Hopsital Value')
-    expect(wrapper.text()).toContain('Balance')
-    expect(wrapper.text()).toContain('Current Loan')
-    expect(wrapper.text()).toContain('Interest Payment')
-    expect(wrapper.text()).toContain('Inflation Rate')
-    expect(wrapper.text()).toContain('Interest Rate')
-    expect(wrapper.findAll('button').some((button) => button.text() === 'Open Modal')).toBe(true)
+    expect(screen.getByText('Bank Manager')).toBeInTheDocument()
+    expect(screen.getByText('Hopsital Value')).toBeInTheDocument()
+    expect(screen.getByText('Balance')).toBeInTheDocument()
+    expect(screen.getByText('Current Loan')).toBeInTheDocument()
+    expect(screen.getByText('Interest Payment')).toBeInTheDocument()
+    expect(screen.getByText('Inflation Rate')).toBeInTheDocument()
+    expect(screen.getByText('Interest Rate')).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: 'Open Modal' })).toHaveLength(3)
   })
 
   it('adjusts the current loan reactively with the stepper buttons', async () => {
-    const { financeStore, wrapper } = mountModal()
+    const { financeStore } = mountModal()
 
-    await wrapper.get('button[aria-label="Increase current loan"]').trigger('click')
-    await wrapper.get('button[aria-label="Decrease current loan"]').trigger('click')
-    await wrapper.get('button[aria-label="Decrease current loan"]').trigger('click')
+    await fireEvent.click(screen.getByRole('button', { name: 'Increase current loan' }))
+    await fireEvent.click(screen.getByRole('button', { name: 'Decrease current loan' }))
+    await fireEvent.click(screen.getByRole('button', { name: 'Decrease current loan' }))
 
     expect(financeStore.form.currentLoan).toBe(39000)
-    expect(wrapper.text()).toContain('£39,000')
+    expect(screen.getAllByText('£39,000').length).toBeGreaterThan(0)
   })
 
   it('opens the secondary insurance modal', async () => {
-    const { wrapper } = mountModal()
+    mountModal()
 
-    await wrapper
-      .findAll('button')
-      .find((button) => button.text() === 'Open Modal')
-      ?.trigger('click')
+    const openButtons = screen.getAllByRole('button', { name: 'Open Modal' })
+    expect(openButtons.length).toBeGreaterThan(0)
 
-    expect(wrapper.text()).toContain('Insurance Record')
-    expect(wrapper.text()).toContain('Money Owed')
+    await fireEvent.click(openButtons[0]!)
+
+    expect(screen.getByText('Insurance Record')).toBeInTheDocument()
+    expect(screen.getAllByText('Money Owed').length).toBeGreaterThan(0)
   })
 })

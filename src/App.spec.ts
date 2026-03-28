@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { render, screen } from '@testing-library/vue'
+import { createPinia } from 'pinia'
 
 const init = vi.fn()
 const destroy = vi.fn()
@@ -20,8 +21,14 @@ describe('App', () => {
   })
 
   it('renders the scene instructions', () => {
-    const wrapper = mount(App)
+    render(App, {
+      global: {
+        plugins: [createPinia()],
+      },
+    })
 
-    expect(wrapper.text()).toContain('Drag from the floor to rotate the world around that point.')
+    expect(
+      screen.getByText('Drag from the floor to rotate the world around that point.'),
+    ).toBeInTheDocument()
   })
 })
