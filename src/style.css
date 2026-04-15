@@ -2,18 +2,124 @@
 
 @theme {
   /* Base palette — Retro Hospital */
-  --color-hospital-mint: #a8e6cf;
-  --color-hospital-blue: #89cff0;
-  --color-hospital-peach: #ffd3b6;
-  --color-hospital-lavender: #d5aaff;
-  --color-hospital-grey: #e0e0e0;
+  --color-hospital-mint-50: #f4fcf8;
+  --color-hospital-mint-100: #e4f8ee;
+  --color-hospital-mint-200: #caf1df;
+  --color-hospital-mint-300: #a8e6cf;
+  --color-hospital-mint-400: #7fd7b7;
+  --color-hospital-mint-500: #57c69d;
+  --color-hospital-mint-600: #39a57f;
+  --color-hospital-mint-700: #2d8467;
+  --color-hospital-mint-800: #286a54;
+  --color-hospital-mint-900: #245746;
+  --color-hospital-mint-950: #113227;
+  --color-hospital-mint: var(--color-hospital-mint-300);
+
+  --color-hospital-blue-50: #f1fbff;
+  --color-hospital-blue-100: #dff4fd;
+  --color-hospital-blue-200: #c4eafb;
+  --color-hospital-blue-300: #9fdcf6;
+  --color-hospital-blue-400: #89cff0;
+  --color-hospital-blue-500: #5db7e3;
+  --color-hospital-blue-600: #3898ca;
+  --color-hospital-blue-700: #2c7aa4;
+  --color-hospital-blue-800: #2a6587;
+  --color-hospital-blue-900: #28556f;
+  --color-hospital-blue-950: #1c3548;
+  --color-hospital-blue: var(--color-hospital-blue-400);
+
+  --color-hospital-peach-50: #fff8f3;
+  --color-hospital-peach-100: #ffefe3;
+  --color-hospital-peach-200: #ffe0cb;
+  --color-hospital-peach-300: #ffd3b6;
+  --color-hospital-peach-400: #ffb788;
+  --color-hospital-peach-500: #ff9a5f;
+  --color-hospital-peach-600: #f67a34;
+  --color-hospital-peach-700: #d85f1f;
+  --color-hospital-peach-800: #b34d1d;
+  --color-hospital-peach-900: #923f1b;
+  --color-hospital-peach-950: #55210c;
+  --color-hospital-peach: var(--color-hospital-peach-300);
+
+  --color-hospital-lavender-50: #fbf7ff;
+  --color-hospital-lavender-100: #f5efff;
+  --color-hospital-lavender-200: #eadcff;
+  --color-hospital-lavender-300: #dcbcff;
+  --color-hospital-lavender-400: #d5aaff;
+  --color-hospital-lavender-500: #b780ff;
+  --color-hospital-lavender-600: #9a57f0;
+  --color-hospital-lavender-700: #803bd0;
+  --color-hospital-lavender-800: #6b33ab;
+  --color-hospital-lavender-900: #582c8b;
+  --color-hospital-lavender-950: #351257;
+  --color-hospital-lavender: var(--color-hospital-lavender-400);
+
+  --color-hospital-grey-50: #fafafa;
+  --color-hospital-grey-100: #f4f4f5;
+  --color-hospital-grey-200: #eaeaea;
+  --color-hospital-grey-300: #e0e0e0;
+  --color-hospital-grey-400: #c6c6c8;
+  --color-hospital-grey-500: #a8a8ac;
+  --color-hospital-grey-600: #7f7f86;
+  --color-hospital-grey-700: #66666d;
+  --color-hospital-grey-800: #525258;
+  --color-hospital-grey-900: #45454a;
+  --color-hospital-grey-950: #262629;
+  --color-hospital-grey: var(--color-hospital-grey-300);
 
   /* Accent palette — Emergency / High Contrast Gameplay */
-  --color-emergency-red: #d90429;
-  --color-emergency-blue: #2b2d42;
-  --color-emergency-white: #edf2f4;
-  --color-emergency-amber: #fca311;
-  --color-emergency-black: #000000;
+  --color-emergency-red-50: #fff0f2;
+  --color-emergency-red-100: #ffe2e7;
+  --color-emergency-red-200: #ffc9d3;
+  --color-emergency-red-300: #ff9fb2;
+  --color-emergency-red-400: #ff6b89;
+  --color-emergency-red-500: #f13b61;
+  --color-emergency-red-600: #d90429;
+  --color-emergency-red-700: #b00022;
+  --color-emergency-red-800: #92051f;
+  --color-emergency-red-900: #7a0a1f;
+  --color-emergency-red-950: #43040d;
+  --color-emergency-red: var(--color-emergency-red-600);
+
+  --color-emergency-blue-50: #f3f4f8;
+  --color-emergency-blue-100: #e6e8ef;
+  --color-emergency-blue-200: #cdd2e1;
+  --color-emergency-blue-300: #a8b0ca;
+  --color-emergency-blue-400: #7d89b0;
+  --color-emergency-blue-500: #5d6992;
+  --color-emergency-blue-600: #485276;
+  --color-emergency-blue-700: #39415d;
+  --color-emergency-blue-800: #2b2d42;
+  --color-emergency-blue-900: #222437;
+  --color-emergency-blue-950: #141522;
+  --color-emergency-blue: var(--color-emergency-blue-800);
+
+  --color-emergency-amber-50: #fff8e7;
+  --color-emergency-amber-100: #ffefc2;
+  --color-emergency-amber-200: #ffe08a;
+  --color-emergency-amber-300: #ffd15a;
+  --color-emergency-amber-400: #fdbb2b;
+  --color-emergency-amber-500: #fca311;
+  --color-emergency-amber-600: #e28506;
+  --color-emergency-amber-700: #bb6409;
+  --color-emergency-amber-800: #98500f;
+  --color-emergency-amber-900: #7c4310;
+  --color-emergency-amber-950: #422005;
+  --color-emergency-amber: var(--color-emergency-amber-500);
+
+  --color-emergency-neutral-50: #f8fafc;
+  --color-emergency-neutral-100: #edf2f4;
+  --color-emergency-neutral-200: #dfe7ec;
+  --color-emergency-neutral-300: #c7d3dc;
+  --color-emergency-neutral-400: #9db0be;
+  --color-emergency-neutral-500: #71879a;
+  --color-emergency-neutral-600: #576b7e;
+  --color-emergency-neutral-700: #445465;
+  --color-emergency-neutral-800: #2c3744;
+  --color-emergency-neutral-900: #17202a;
+  --color-emergency-neutral-950: #000000;
+  --color-emergency-white: var(--color-emergency-neutral-100);
+  --color-emergency-black: var(--color-emergency-neutral-950);
 
   /* Semantic aliases */
   --color-brand-primary: var(--color-hospital-mint);
@@ -30,37 +136,37 @@
   --color-ui-border: var(--color-hospital-blue);
 
   /* HUD palette */
-  --color-hud-shell: color-mix(in srgb, var(--color-hospital-blue) 70%, var(--color-emergency-blue));
-  --color-hud-shell-border: var(--color-emergency-blue);
-  --color-hud-shell-shadow: var(--color-emergency-blue);
-  --color-hud-gold-border: color-mix(in srgb, var(--color-emergency-amber) 72%, var(--color-emergency-white));
-  --color-hud-gold-top: color-mix(in srgb, var(--color-emergency-white) 78%, var(--color-emergency-amber));
-  --color-hud-gold-bottom: color-mix(in srgb, var(--color-emergency-amber) 78%, var(--color-hospital-peach));
-  --color-hud-cream: color-mix(in srgb, var(--color-emergency-white) 85%, var(--color-hospital-peach));
-  --color-hud-card: color-mix(in srgb, var(--color-hospital-grey) 78%, var(--color-hospital-peach));
-  --color-hud-date-bg: color-mix(in srgb, var(--color-emergency-white) 82%, var(--color-hospital-peach));
-  --color-hud-date-text: color-mix(in srgb, var(--color-emergency-red) 74%, var(--color-emergency-amber));
+  --color-hud-shell: var(--color-hospital-blue-700);
+  --color-hud-shell-border: var(--color-emergency-blue-800);
+  --color-hud-shell-shadow: var(--color-emergency-blue-800);
+  --color-hud-gold-border: var(--color-emergency-amber-200);
+  --color-hud-gold-top: var(--color-emergency-amber-100);
+  --color-hud-gold-bottom: var(--color-emergency-amber-500);
+  --color-hud-cream: var(--color-hospital-peach-100);
+  --color-hud-card: var(--color-hospital-grey-200);
+  --color-hud-date-bg: var(--color-hospital-peach-100);
+  --color-hud-date-text: var(--color-emergency-red-700);
   --color-hud-display-border: #494233;
   --color-hud-display-bg: #2e2a22;
   --color-hud-display-text: #d8d3bf;
   --color-hud-display-slot: #171511;
-  --color-hud-rep-label: color-mix(in srgb, var(--color-emergency-red) 58%, var(--color-emergency-blue));
-  --color-hud-rep-track-border: color-mix(in srgb, var(--color-hospital-blue) 24%, var(--color-emergency-blue));
-  --color-hud-rep-track-bg: color-mix(in srgb, var(--color-emergency-blue) 90%, var(--color-emergency-black));
-  --color-hud-rep-start: color-mix(in srgb, var(--color-emergency-amber) 78%, var(--color-hospital-peach));
-  --color-hud-rep-mid: color-mix(in srgb, var(--color-emergency-amber) 70%, var(--color-emergency-white));
-  --color-hud-rep-end: color-mix(in srgb, var(--color-hospital-mint) 82%, var(--color-hospital-blue));
+  --color-hud-rep-label: var(--color-emergency-red-800);
+  --color-hud-rep-track-border: var(--color-emergency-blue-700);
+  --color-hud-rep-track-bg: var(--color-emergency-blue-950);
+  --color-hud-rep-start: var(--color-emergency-amber-400);
+  --color-hud-rep-mid: var(--color-emergency-amber-200);
+  --color-hud-rep-end: var(--color-hospital-mint-400);
   --color-hud-menu-border: var(--color-hospital-blue);
-  --color-hud-menu-bg: color-mix(in srgb, var(--color-hospital-blue) 72%, var(--color-emergency-blue));
-  --color-hud-button-border: color-mix(in srgb, var(--color-hospital-blue) 88%, var(--color-emergency-white));
-  --color-hud-button-top: color-mix(in srgb, var(--color-hospital-blue) 85%, var(--color-hospital-mint));
-  --color-hud-button-bottom: color-mix(in srgb, var(--color-hospital-blue) 55%, var(--color-emergency-blue));
-  --color-hud-button-glow: color-mix(in srgb, var(--color-hospital-blue) 76%, var(--color-emergency-white));
-  --color-hud-status-border: color-mix(in srgb, var(--color-hospital-blue) 62%, var(--color-hospital-mint));
-  --color-hud-status-top: color-mix(in srgb, var(--color-emergency-blue) 76%, var(--color-emergency-black));
-  --color-hud-status-bottom: color-mix(in srgb, var(--color-emergency-black) 84%, var(--color-emergency-blue));
-  --color-hud-status-text: color-mix(in srgb, var(--color-hospital-blue) 80%, var(--color-hospital-mint));
-  --color-hud-status-glow: color-mix(in srgb, var(--color-hospital-blue) 28%, var(--color-emergency-blue));
+  --color-hud-menu-bg: var(--color-hospital-blue-700);
+  --color-hud-button-border: var(--color-hospital-blue-200);
+  --color-hud-button-top: var(--color-hospital-blue-500);
+  --color-hud-button-bottom: var(--color-hospital-blue-700);
+  --color-hud-button-glow: var(--color-hospital-blue-100);
+  --color-hud-status-border: var(--color-hospital-blue-500);
+  --color-hud-status-top: var(--color-emergency-blue-950);
+  --color-hud-status-bottom: var(--color-emergency-black);
+  --color-hud-status-text: var(--color-hospital-blue-500);
+  --color-hud-status-glow: var(--color-emergency-blue-700);
 
   --color-state-success: var(--color-hospital-mint);
   --color-state-info: var(--color-hospital-blue);
@@ -81,11 +187,11 @@
   --radius-modal-panel: 1.75rem;
 
   /* Shadows */
-  --shadow-panel: 0 2px 0 var(--color-emergency-blue), 0 4px 12px color-mix(in srgb, var(--color-emergency-blue) 18%, transparent);
+  --shadow-panel: 0 2px 0 var(--color-emergency-blue), 0 4px 12px #2b2d422e;
   --shadow-button: 0 2px 0 var(--color-emergency-blue);
-  --shadow-danger: 0 0 0 2px color-mix(in srgb, var(--color-emergency-red) 20%, transparent);
-  --shadow-modal-panel: 0 14px 0 var(--color-emergency-blue), 0 26px 40px color-mix(in srgb, var(--color-emergency-blue) 30%, transparent);
-  --shadow-modal-panel-sm: 0 12px 0 var(--color-emergency-blue), 0 18px 30px color-mix(in srgb, var(--color-emergency-black) 22%, transparent);
+  --shadow-danger: 0 0 0 2px #d9042933;
+  --shadow-modal-panel: 0 14px 0 var(--color-emergency-blue), 0 26px 40px #2b2d424d;
+  --shadow-modal-panel-sm: 0 12px 0 var(--color-emergency-blue), 0 18px 30px #00000038;
   --shadow-hud-shell: 0 4px 0 var(--color-hud-shell-shadow);
   --shadow-hud-cream-inset: inset 0 0 0 2px var(--color-hud-cream);
   --shadow-hud-button-inset: inset 0 0 0 1px var(--color-hud-button-glow);

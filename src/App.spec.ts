@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 const init = vi.fn()
 const destroy = vi.fn()
 
-vi.mock('./game/state/stores/scene', () => ({
+vi.mock('@state/stores/scene', () => ({
   useSceneStore: () => ({
     init,
     destroy,
@@ -27,8 +27,7 @@ describe('App', () => {
       },
     })
 
-    expect(
-      screen.getByText('Drag from the floor to rotate the world around that point.'),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open finance menu' })).toBeInTheDocument()
+    expect(screen.getByText('Hospital status nominal. Hover for management tools.')).toBeInTheDocument()
   })
 })

@@ -8,7 +8,14 @@
 
     // Path mapping for cleaner imports.
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@content/*": ["./src/content/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@scene/*": ["./src/scene/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@simulation/*": ["./src/simulation/*"],
+      "@state/*": ["./src/state/*"],
+      "@ui/*": ["./src/ui/*"]
     },
 
     // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.
